@@ -45,9 +45,11 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
+  --shadow-neon: 0 0 20px rgba(52, 211, 153, 0.5);
   --animate-marquee: marquee 40s linear infinite;
+}
 
-  @keyframes marquee {
+@keyframes marquee {
     from {
       transform: translateX(0);
     }
@@ -55,7 +57,6 @@
       transform: translateX(-50%);
     }
   }
-}
 
 :root {
   --radius: 0.625rem;

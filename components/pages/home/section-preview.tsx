@@ -154,7 +154,7 @@ function SectionPreview() {
                       className="size-12 rounded-full border-4 border-white bg-zinc-200 shadow-sm overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:z-50"
                     >
                       <img
-                        src={`https://i.pravatar.cc/100?img=${x + 10}`}
+                        src={`/images/user${x}.jpg`}
                         className="size-full object-cover grayscale hover:grayscale-0 transition-all"
                         alt={`User ${x}`}
                       />
