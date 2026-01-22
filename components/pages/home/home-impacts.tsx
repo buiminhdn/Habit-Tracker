@@ -42,14 +42,14 @@ export default function HomeImpacts() {
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-3 xl:gap-12">
+      <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-3 xl:gap-12">
         {FRAMEWORKS.map((f, i) => (
           <div
             key={i}
             className="group rounded-4xl bg-zinc-100 p-8 transition-all duration-500 hover:bg-black xl:p-14"
           >
-            <div className="mb-10 flex h-16 w-16 items-center justify-center rounded-3xl bg-white shadow-md transition-transform duration-500 group-hover:scale-110 md:mb-12 md:h-20 md:w-20">
-              <f.icon size={28} className="text-black md:size-10" />
+            <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-3xl bg-white shadow-md transition-transform duration-500 group-hover:scale-105 md:mb-12 md:h-18 md:w-18">
+              <f.icon size={28} className="text-black size-6 md:size-8" />
             </div>
             <p className="mb-4 text-xl font-black uppercase tracking-tight text-zinc-900 transition-colors duration-500 group-hover:text-white md:mb-6 md:text-2xl">
               {f.title}
