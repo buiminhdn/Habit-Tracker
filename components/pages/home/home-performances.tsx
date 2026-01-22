@@ -1,7 +1,20 @@
 "use client";
 
-import { useEffect, useState, useRef, useMemo } from "react";
-import { useInView } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+
+const STATS = [
+  { value: 98.4, suffix: "%", decimals: 1, label: "User Retention" },
+  {
+    value: 12,
+    suffix: "h",
+    decimals: 0,
+    prefix: "+",
+    label: "Weekly Deep Work",
+    highlight: true,
+  },
+  { value: 4200, suffix: "+", decimals: 0, label: "Active Growth Cycles" },
+  { value: 89, suffix: "%", decimals: 0, label: "Goal Alignment" },
+];
 
 function CountUp({
   end,
@@ -13,31 +26,38 @@ function CountUp({
   decimals?: number;
 }) {
   const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (isInView) {
-      let startTime: number;
-      let frameId: number;
-      const duration = 2000;
+    const element = ref.current;
+    if (!element) return;
 
-      const animate = (currentTime: number) => {
-        if (!startTime) startTime = currentTime;
-        const progress = Math.min((currentTime - startTime) / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          let startTime: number;
+          const duration = 2000;
 
-        setCount(easeOut * end);
+          const animate = (currentTime: number) => {
+            if (!startTime) startTime = currentTime;
+            const progress = Math.min((currentTime - startTime) / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
 
-        if (progress < 1) {
-          frameId = requestAnimationFrame(animate);
+            setCount(easeOut * end);
+
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+
+          requestAnimationFrame(animate);
+          observer.disconnect();
         }
-      };
+      },
+      { threshold: 0.1 },
+    );
 
-      frameId = requestAnimationFrame(animate);
-      return () => cancelAnimationFrame(frameId);
-    }
-  }, [isInView, end]);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [end]);
 
   return (
     <span ref={ref}>
@@ -50,39 +70,24 @@ function CountUp({
   );
 }
 
-function HomePerformances() {
-  const stats = useMemo(
-    () => [
-      { value: 98.4, suffix: "%", decimals: 1, label: "User Retention" },
-      {
-        value: 12,
-        suffix: "h",
-        decimals: 0,
-        prefix: "+",
-        label: "Weekly Deep Work",
-      },
-      { value: 4200, suffix: "+", decimals: 0, label: "Active Growth Cycles" },
-      { value: 89, suffix: "%", decimals: 0, label: "Goal Alignment" },
-    ],
-    [],
-  );
-
+export default function HomePerformances() {
   return (
     <section
       id="performance"
-      className="mt-40 py-20 px-6 bg-white border-y border-zinc-200 relative overflow-hidden"
+      className="relative mt-20 overflow-hidden border-y border-zinc-200 bg-zinc-50/50 py-12 px-6 md:mt-40 md:py-20"
     >
-      <div className="absolute inset-0 bg-zinc-50/50 -z-10"></div>
-      <div className="max-w-7xl mx-auto text-center">
-        <div className="grid grid-cols-4 items-center divide-x divide-zinc-100">
-          {stats.map((stat, i) => (
-            <div key={i} className="relative px-8 group">
-              {i === 1 && (
-                <div className="absolute inset-0 bg-emerald-400/5 blur-3xl rounded-full -z-10" />
+      <div className="mx-auto max-w-7xl text-center">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 md:divide-x md:divide-zinc-100 lg:gap-0">
+          {STATS.map((stat, i) => (
+            <div key={i} className="relative px-4 md:px-8">
+              {stat.highlight && (
+                <div className="absolute inset-0 -z-10 rounded-full bg-emerald-400/5 blur-3xl" />
               )}
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <p
-                  className={`text-7xl font-black tracking-tighter font-heading ${i === 1 ? "text-emerald-500" : "text-zinc-900"}`}
+                  className={`font-heading text-5xl font-black tracking-tighter md:text-7xl ${
+                    stat.highlight ? "text-emerald-500" : "text-zinc-900"
+                  }`}
                 >
                   {stat.prefix}
                   <CountUp
@@ -91,7 +96,7 @@ function HomePerformances() {
                     suffix={stat.suffix}
                   />
                 </p>
-                <p className="text-xs font-black uppercase tracking-widest text-zinc-400 font-sans">
+                <p className="font-sans text-xs font-black uppercase tracking-widest text-zinc-400 md:text-xs">
                   {stat.label}
                 </p>
               </div>
@@ -102,5 +107,3 @@ function HomePerformances() {
     </section>
   );
 }
-
-export default HomePerformances;

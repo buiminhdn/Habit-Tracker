@@ -22,20 +22,26 @@ function HomeCapabilities() {
   ];
 
   return (
-    <section className="py-24 bg-black overflow-hidden mt-40">
+    <section className="mt-20 overflow-hidden bg-black py-12 md:mt-40 md:py-24">
       <div className="flex w-max animate-marquee">
         {capabilities.map((item, i) => (
-          <div key={i} className="flex items-center gap-8 px-16 py-6">
-            <item.icon className="text-emerald-400" size={24} />
-            <span className="text-white text-xl font-black uppercase tracking-widest font-heading">
+          <div
+            key={i}
+            className="flex items-center gap-4 px-8 py-4 md:gap-8 md:px-16 md:py-6"
+          >
+            <item.icon className="text-emerald-400" size={20} />
+            <span className="font-heading text-sm font-black uppercase tracking-widest text-white md:text-xl">
               {item.label}
             </span>
           </div>
         ))}
         {capabilities.map((item, i) => (
-          <div key={`${i}-dup`} className="flex items-center gap-8 px-16 py-6">
-            <item.icon className="text-emerald-400" size={24} />
-            <span className="text-white text-xl font-black uppercase tracking-widest font-heading">
+          <div
+            key={`${i}-dup`}
+            className="flex items-center gap-4 px-8 py-4 md:gap-8 md:px-16 md:py-6"
+          >
+            <item.icon className="text-emerald-400" size={20} />
+            <span className="font-heading text-sm font-black uppercase tracking-widest text-white md:text-xl">
               {item.label}
             </span>
           </div>

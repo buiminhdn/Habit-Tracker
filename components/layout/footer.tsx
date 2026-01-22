@@ -1,7 +1,4 @@
-"use client";
-
 import { Github, Linkedin, Twitter } from "lucide-react";
-import { motion, Variants } from "framer-motion";
 
 const FOOTER_LINKS = [
   {
@@ -19,88 +16,53 @@ const FOOTER_LINKS = [
 ];
 
 function Footer() {
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    },
-  };
-
   return (
-    <footer className="mt-40 pb-16 px-6 border-t border-zinc-100">
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-50px" }}
-        className="max-w-7xl mx-auto pt-24"
-      >
-        <div className="grid grid-cols-12 gap-20 mb-24 items-start">
-          <motion.div variants={itemVariants} className="col-span-6 space-y-8">
+    <footer className="mt-20 border-t border-zinc-100 px-6 pb-16 font-heading lg:mt-40">
+      <div className="mx-auto max-w-7xl pt-12 lg:pt-24">
+        <div className="mb-12 grid grid-cols-1 gap-12 lg:mb-24 lg:grid-cols-12 lg:gap-20">
+          <div className="col-span-1 space-y-8 lg:col-span-6">
             <div className="flex items-center gap-4">
               <img
                 src="/icons/logo.svg"
                 alt="Logo"
                 className="size-10 object-contain"
               />
-              <span className="text-2xl font-black tracking-tighter uppercase font-heading">
+              <span className="text-xl font-black uppercase tracking-tighter lg:text-2xl">
                 Shape Your Days<span className="text-emerald-400">.</span>
               </span>
             </div>
-            <p className="text-zinc-500 font-medium text-lg leading-relaxed max-w-sm font-sans">
+            <p className="max-w-sm font-sans text-base font-medium leading-relaxed text-zinc-500 lg:text-lg">
               Building the infrastructure for intentional, high-impact growth.
               Reclaim your focus and command your performance.
             </p>
-          </motion.div>
+          </div>
 
-          <div className="col-span-6 flex justify-end gap-24">
-            {FOOTER_LINKS.slice(0, 2).map((group) => (
-              <motion.div
-                variants={itemVariants}
-                key={group.title}
-                className="space-y-8"
-              >
-                <p className="text-xs font-black uppercase tracking-widest text-zinc-900 font-heading">
+          <div className="col-span-1 grid grid-cols-2 gap-10 sm:grid-cols-3 lg:col-span-6 lg:flex lg:justify-end lg:gap-24">
+            {FOOTER_LINKS.map((group) => (
+              <div key={group.title} className="space-y-6 lg:space-y-8">
+                <p className="text-xs font-black uppercase tracking-widest text-zinc-900 lg:text-xs">
                   {group.title}
                 </p>
-                <ul className="space-y-4 font-sans text-sm">
+                <ul className="space-y-3 font-sans text-xs lg:space-y-4 lg:text-sm">
                   {group.links.map((link) => (
                     <li key={link}>
                       <a
                         href="#"
-                        className="font-semibold text-zinc-400 hover:text-black transition-colors"
+                        className="font-semibold text-zinc-400 transition-colors hover:text-black"
                       >
                         {link}
                       </a>
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
 
-        <motion.div
-          variants={itemVariants}
-          className="flex justify-between items-center pt-12 border-t border-zinc-50"
-        >
-          <div className="flex items-center gap-6">
-            <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 font-sans">
+        <div className="flex flex-col items-center justify-between gap-8 border-t border-zinc-50 pt-12 lg:flex-row lg:gap-0">
+          <div className="flex flex-col items-center gap-6 lg:flex-row">
+            <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 font-sans text-center lg:text-xs">
               © 2026 Shape Your Days. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
@@ -108,7 +70,7 @@ function Footer() {
                 <a
                   key={i}
                   href="#"
-                  className="text-zinc-400 hover:text-black transition-colors duration-300"
+                  className="text-zinc-400 transition-colors duration-300 hover:text-black"
                 >
                   <Icon size={18} />
                 </a>
@@ -116,13 +78,13 @@ function Footer() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="size-2 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
-            <span className="text-xs font-black uppercase tracking-widest text-zinc-400 font-heading">
+            <div className="size-2 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 lg:text-xs">
               Operational
             </span>
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </footer>
   );
 }

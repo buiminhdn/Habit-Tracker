@@ -4,10 +4,10 @@ import ScrollToTop from "@/components/layout/scroll-to-top";
 import HomeHero from "@/components/pages/home/home-hero";
 import HomePreview from "@/components/pages/home/home-preview";
 import HomeCapabilities from "@/components/pages/home/home-capabilities";
-import HomeAdvantages from "@/components/pages/home/home-advantages";
 import HomePerformances from "@/components/pages/home/home-performances";
-import HomeFramework from "@/components/pages/home/home-framework";
 import HomeCTA from "@/components/pages/home/home-cta";
+import HomeFeatures from "@/components/pages/home/home-features";
+import HomeImpacts from "@/components/pages/home/home-impacts";
 
 export default function Home() {
   return (
@@ -20,11 +20,11 @@ export default function Home() {
 
       <HomeCapabilities />
 
-      <HomeAdvantages />
+      <HomeFeatures />
 
       <HomePerformances />
 
-      <HomeFramework />
+      <HomeImpacts />
 
       <HomeCTA />
 
