@@ -3,7 +3,7 @@
 import { Activity, ChevronRight, Layers, Shield } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 
-function SectionAdvantages() {
+function HomeAdvantages() {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -151,4 +151,4 @@ function SectionAdvantages() {
   );
 }
 
-export default SectionAdvantages;
+export default HomeAdvantages;

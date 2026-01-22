@@ -1,32 +1,32 @@
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 import ScrollToTop from "@/components/layout/scroll-to-top";
-import SectionAdvantages from "@/components/pages/home/section-advantages";
-import SectionCapabilities from "@/components/pages/home/section-capabilities";
-import SectionCTA from "@/components/pages/home/section-cta";
-import SectionFramework from "@/components/pages/home/section-framework";
-import SectionHero from "@/components/pages/home/section-hero";
-import SectionPerformances from "@/components/pages/home/section-performances";
-import SectionPreview from "@/components/pages/home/section-preview";
+import HomeHero from "@/components/pages/home/home-hero";
+import HomePreview from "@/components/pages/home/home-preview";
+import HomeCapabilities from "@/components/pages/home/home-capabilities";
+import HomeAdvantages from "@/components/pages/home/home-advantages";
+import HomePerformances from "@/components/pages/home/home-performances";
+import HomeFramework from "@/components/pages/home/home-framework";
+import HomeCTA from "@/components/pages/home/home-cta";
 
 export default function Home() {
   return (
     <div>
       <Navbar />
 
-      <SectionHero />
+      <HomeHero />
 
-      <SectionPreview />
+      <HomePreview />
 
-      <SectionCapabilities />
+      <HomeCapabilities />
 
-      <SectionAdvantages />
+      <HomeAdvantages />
 
-      <SectionPerformances />
+      <HomePerformances />
 
-      <SectionFramework />
+      <HomeFramework />
 
-      <SectionCTA />
+      <HomeCTA />
 
       <Footer />
 

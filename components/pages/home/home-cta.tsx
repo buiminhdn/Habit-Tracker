@@ -10,7 +10,7 @@ const FEATURES = [
   { icon: Globe, label: "Hybrid Edge" },
 ];
 
-function SectionCTA() {
+function HomeCTA() {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -47,7 +47,7 @@ function SectionCTA() {
   return (
     <section
       id="cta"
-      className="py-32 mt-60 px-6 bg-zinc-950 text-white relative overflow-hidden"
+      className="py-32 mt-40 px-6 bg-zinc-950 text-white relative overflow-hidden"
     >
       {/* Animated glow effects */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-150 bg-emerald-400/10 blur-3xl rounded-full" />
@@ -139,4 +139,4 @@ function SectionCTA() {
   );
 }
 
-export default SectionCTA;
+export default HomeCTA;

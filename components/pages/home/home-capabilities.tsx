@@ -9,7 +9,7 @@ import {
   Cpu,
 } from "lucide-react";
 
-function SectionCapabilities() {
+function HomeCapabilities() {
   const capabilities = [
     { icon: Terminal, label: "Command Center" },
     { icon: ShieldCheck, label: "Private Roadmap" },
@@ -45,4 +45,4 @@ function SectionCapabilities() {
   );
 }
 
-export default SectionCapabilities;
+export default HomeCapabilities;

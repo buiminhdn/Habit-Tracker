@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Layers, Target, Zap } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 
-function SectionFramework() {
+function HomeFramework() {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -28,7 +28,7 @@ function SectionFramework() {
   };
 
   return (
-    <section id="framework" className="mt-60 px-6">
+    <section id="framework" className="mt-40 px-6">
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -94,4 +94,4 @@ function SectionFramework() {
   );
 }
 
-export default SectionFramework;
+export default HomeFramework;

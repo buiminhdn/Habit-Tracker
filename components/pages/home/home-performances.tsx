@@ -50,7 +50,7 @@ function CountUp({
   );
 }
 
-function SectionPerformances() {
+function HomePerformances() {
   const stats = useMemo(
     () => [
       { value: 98.4, suffix: "%", decimals: 1, label: "User Retention" },
@@ -70,7 +70,7 @@ function SectionPerformances() {
   return (
     <section
       id="performance"
-      className="mt-52 py-20 px-6 bg-white border-y border-zinc-200 relative overflow-hidden"
+      className="mt-40 py-20 px-6 bg-white border-y border-zinc-200 relative overflow-hidden"
     >
       <div className="absolute inset-0 bg-zinc-50/50 -z-10"></div>
       <div className="max-w-7xl mx-auto text-center">
@@ -103,4 +103,4 @@ function SectionPerformances() {
   );
 }
 
-export default SectionPerformances;
+export default HomePerformances;

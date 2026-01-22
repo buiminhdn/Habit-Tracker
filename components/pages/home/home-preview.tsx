@@ -43,7 +43,7 @@ const METRIC_CARDS = [
   },
 ];
 
-function SectionPreview() {
+function HomePreview() {
   const [mockupActive, setMockupActive] = useState(0);
 
   useEffect(() => {
@@ -191,4 +191,4 @@ function SectionPreview() {
   );
 }
 
-export default SectionPreview;
+export default HomePreview;

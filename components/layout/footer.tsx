@@ -100,7 +100,7 @@ function Footer() {
           className="flex justify-between items-center pt-12 border-t border-zinc-50"
         >
           <div className="flex items-center gap-6">
-            <p className="text-xs font-bold uppercase tracking-widest text-zinc-300 font-sans">
+            <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 font-sans">
               © 2026 Shape Your Days. All rights reserved.
             </p>
             <div className="flex items-center gap-4">

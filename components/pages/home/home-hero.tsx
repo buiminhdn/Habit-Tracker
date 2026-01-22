@@ -4,7 +4,7 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 
-function SectionHero() {
+function HomeHero() {
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -75,4 +75,4 @@ function SectionHero() {
   );
 }
 
-export default SectionHero;
+export default HomeHero;
