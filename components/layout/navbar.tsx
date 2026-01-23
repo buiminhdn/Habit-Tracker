@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
+import { ROUTES } from "@/constants/routes";
 
 const NAV_ITEMS = ["Capabilities", "Framework", "Performance"];
 
@@ -48,10 +50,14 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden gap-2 tracking-wide md:flex">
-          <Button variant="ghost" className="px-6 py-5 text-xs font-bold">
-            SIGN IN
-          </Button>
-          <Button className="px-6 py-5 text-xs font-bold">GET STARTED</Button>
+          <Link href={ROUTES.AUTH.LOGIN}>
+            <Button variant="ghost" className="px-6 py-5 text-xs font-bold">
+              SIGN IN
+            </Button>
+          </Link>
+          <Link href={ROUTES.AUTH.LOGIN}>
+            <Button className="px-6 py-5 text-xs font-bold">GET STARTED</Button>
+          </Link>
         </div>
 
         <button
@@ -83,19 +89,19 @@ export default function Navbar() {
             </a>
           ))}
           <div className="flex w-full flex-col gap-3 px-8 pt-4">
-            <Button
-              variant="outline"
-              className="w-full py-6 text-xs font-bold"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              SIGN IN
-            </Button>
-            <Button
-              className="w-full py-6 text-xs font-bold"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              GET STARTED
-            </Button>
+            <Link href={ROUTES.AUTH.LOGIN} className="w-full">
+              <Button
+                variant="outline"
+                className="w-full py-6 text-xs font-bold"
+              >
+                SIGN IN
+              </Button>
+            </Link>
+            <Link href={ROUTES.AUTH.LOGIN} className="w-full">
+              <Button className="w-full py-6 text-xs font-bold">
+                GET STARTED
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
