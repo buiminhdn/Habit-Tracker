@@ -36,7 +36,12 @@ export default function Sidebar() {
         {/* Logo */}
         <div className="mb-10 px-2 flex items-center gap-3">
           <img src="/icons/logo.svg" alt="Logo" className="w-8" />
-          <p className="font-heading font-bold uppercase">{APP_NAME}</p>
+          <div>
+            <p className="font-heading font-bold uppercase">{APP_NAME}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">
+              Strategic Life OS
+            </p>
+          </div>
         </div>
 
         {/* Navigation */}

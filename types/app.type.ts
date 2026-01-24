@@ -44,3 +44,15 @@ export interface QuarterInfo {
   completed: number;
   total: number;
 }
+
+export interface Task {
+  id: number;
+  title: string;
+  done: boolean;
+  type?: "daily" | "habit";
+}
+
+export interface Quote {
+  text: string;
+  author: string;
+}
