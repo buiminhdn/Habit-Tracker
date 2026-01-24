@@ -1,7 +1,7 @@
 import React from "react";
 
-function RefectionPage() {
-  return <div>RefectionPage</div>;
+function ReflectionPage() {
+  return <div>ReflectionPage</div>;
 }
 
-export default RefectionPage;
+export default ReflectionPage;

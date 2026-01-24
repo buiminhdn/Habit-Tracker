@@ -33,7 +33,7 @@ export default function ForgotPasswordPage() {
           />
         </Field>
         <Field>
-          <Button type="submit" className="py-5 rounded-lg">
+          <Button type="submit" className="py-5.5 rounded-lg">
             Reset password
           </Button>
         </Field>

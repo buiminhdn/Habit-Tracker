@@ -65,7 +65,7 @@ export default function SignupPage() {
           </div>
         </Field>
         <Field>
-          <Button type="submit" className="py-5 rounded-lg">
+          <Button type="submit" className="py-5.5 rounded-lg">
             Create account
           </Button>
         </Field>

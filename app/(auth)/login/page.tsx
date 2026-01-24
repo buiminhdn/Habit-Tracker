@@ -62,7 +62,7 @@ export default function LoginPage() {
           </div>
         </Field>
         <Field>
-          <Button type="submit" className="py-5 rounded-lg">
+          <Button type="submit" className="py-5.5 rounded-lg">
             Login
           </Button>
         </Field>

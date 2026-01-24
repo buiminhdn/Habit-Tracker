@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
+import { APP_NAME } from "@/constants/app.constant";
 
 const NAV_ITEMS = ["Capabilities", "Framework", "Performance"];
 
@@ -32,7 +33,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <img src="/icons/logo.svg" alt="Logo" className="w-10 md:w-12" />
           <span className="md:hidden lg:block font-heading text-lg font-semibold uppercase md:text-xl">
-            Shape Your Days
+            {APP_NAME}
           </span>
         </div>
 
