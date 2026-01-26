@@ -7,8 +7,9 @@ import { QUOTES } from "@/constants/fake-data";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
-import { AddTaskDialog } from "@/components/pages/dashboard/dialog-task-add";
+import { CreateObjectiveDialog } from "@/components/pages/dashboard/dialog-objective";
 import { TaskItem } from "@/components/pages/dashboard/item-task";
+import { TaskStatusSummary } from "@/components/pages/dashboard/status-summary";
 import { Textarea } from "@/components/ui/textarea";
 import { useTasks } from "@/hooks/use-tasks";
 import { formatDate } from "@/lib/utils";
@@ -76,7 +77,11 @@ function DailyPage() {
                 </div>
                 <p className="font-heading">Primary Tasks</p>
               </div>
-              <AddTaskDialog onAdd={addDailyTask} />
+              <CreateObjectiveDialog
+                onAdd={addDailyTask}
+                triggerLabel="New Task"
+                submitLabel="Add Task"
+              />
             </div>
 
             <div className="space-y-2">
@@ -110,27 +115,12 @@ function DailyPage() {
               ))}
             </div>
 
-            {remainingCount > 0 ? (
-              <div className="mt-8 flex items-center justify-center p-4 rounded-lg border border-dashed border-amber-300 bg-amber-200/20">
-                <p className="text-xs font-bold text-amber-700 italic flex items-center gap-2">
-                  <Sparkles size={16} className="text-amber-500" />
-                  {remainingCount} objectives remaining for a peak performance
-                  day.
-                </p>
-              </div>
-            ) : (
-              <div className="mt-8 flex items-center justify-center p-4 rounded-lg bg-black text-white shadow-lg">
-                <p className="text-xs font-bold italic flex items-center gap-2">
-                  <Sparkles size={16} className="text-white" />
-                  Day Mastered. All objectives synchronized.
-                </p>
-              </div>
-            )}
+            <TaskStatusSummary remainingCount={remainingCount} type="day" />
           </section>
         </div>
 
         <div className="col-span-5 space-y-8">
-          <Card className="group border-zinc-200 shadow-xs bg-white rounded-xl">
+          <Card className="group border-zinc-200 shadow-xs bg-white">
             <CardContent>
               <div className="w-10 h-10 rounded-xl bg-zinc-900 flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-105 group-hover:rotate-6">
                 <QuoteIcon size={16} className="text-white" />

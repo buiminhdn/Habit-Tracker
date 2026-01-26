@@ -14,12 +14,29 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Field } from "@/components/ui/field";
+import { cn } from "@/lib/utils";
 
-interface AddTaskDialogProps {
+interface CreateObjectiveDialogProps {
   onAdd?: (title: string) => void;
+  triggerLabel?: string;
+  triggerClassName?: string;
+  triggerVariant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link";
+  submitLabel?: string;
 }
 
-export function AddTaskDialog({ onAdd }: AddTaskDialogProps) {
+export function CreateObjectiveDialog({
+  onAdd,
+  triggerLabel = "New Task",
+  triggerClassName,
+  triggerVariant = "outline",
+  submitLabel = "Set Goal",
+}: CreateObjectiveDialogProps) {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
 
@@ -36,11 +53,11 @@ export function AddTaskDialog({ onAdd }: AddTaskDialogProps) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          variant="outline"
+          variant={triggerVariant}
           size="sm"
-          className="uppercase text-xs font-bold"
+          className={cn("uppercase text-xs font-bold", triggerClassName)}
         >
-          <Plus size={12} /> New Task
+          <Plus size={12} /> {triggerLabel}
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -67,7 +84,7 @@ export function AddTaskDialog({ onAdd }: AddTaskDialogProps) {
           </Field>
           <DialogFooter>
             <Button type="submit" className="w-full py-5.5 rounded-lg">
-              Set Goal
+              {submitLabel}
             </Button>
           </DialogFooter>
         </form>

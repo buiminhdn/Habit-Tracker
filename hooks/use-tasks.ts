@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { Task } from "@/types/app.type";
+import { Task, WeeklyGoal } from "@/types/app.type";
 import { TaskService } from "@/lib/services/task.service";
 import { triggerConfetti } from "@/lib/confetti";
 
@@ -9,6 +9,9 @@ export function useTasks() {
   );
   const [habitTasks, setHabitTasks] = useState<Task[]>(() =>
     TaskService.getHabitTasks(),
+  );
+  const [weeklyGoals, setWeeklyGoals] = useState<WeeklyGoal[]>(() =>
+    TaskService.getWeeklyGoals(),
   );
 
   const toggleDailyTask = useCallback((id: number) => {
@@ -29,21 +32,47 @@ export function useTasks() {
     });
   }, []);
 
+  const toggleWeeklyGoal = useCallback((id: number) => {
+    setWeeklyGoals((prev) => {
+      const updated = TaskService.toggleGoalStatus(prev, id);
+      const isNowDone = updated.find((g) => g.id === id)?.done;
+      if (isNowDone) triggerConfetti();
+      return updated;
+    });
+  }, []);
+
   const addDailyTask = useCallback((title: string) => {
     setDailyTasks((prev) => TaskService.addTask(prev, title, "daily"));
+  }, []);
+
+  const addWeeklyGoal = useCallback((title: string) => {
+    setWeeklyGoals((prev) => TaskService.addWeeklyGoal(prev, title));
   }, []);
 
   const allTasks = [...dailyTasks, ...habitTasks];
   const progress = TaskService.calculateProgress(allTasks);
   const remainingCount = TaskService.getRemainingTasksCount(allTasks);
 
+  const weeklyGoalsProgress =
+    weeklyGoals.length > 0
+      ? Math.round(
+          (weeklyGoals.filter((g) => g.done).length / weeklyGoals.length) * 100,
+        )
+      : 0;
+  const remainingGoalsCount = weeklyGoals.filter((g) => !g.done).length;
+
   return {
     dailyTasks,
     habitTasks,
+    weeklyGoals,
     progress,
+    weeklyGoalsProgress,
     remainingCount,
+    remainingGoalsCount,
     toggleDailyTask,
     toggleHabitTask,
+    toggleWeeklyGoal,
     addDailyTask,
+    addWeeklyGoal,
   };
 }

@@ -1,39 +1,36 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Sparkles, Clock, Quote as QuoteIcon, Zap, Target } from "lucide-react";
-import { Quote } from "@/types/app.type";
-import { QUOTES } from "@/constants/fake-data";
+import React, { useState } from "react";
+import {
+  Clock,
+  Zap,
+  LayoutGrid,
+  MessageSquare,
+  ArrowUpRight,
+} from "lucide-react";
+import { useTasks } from "@/hooks/use-tasks";
+import { formatCycleDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
-import { AddTaskDialog } from "@/components/pages/dashboard/dialog-task-add";
-import { TaskItem } from "@/components/pages/dashboard/item-task";
+import { CreateObjectiveDialog } from "@/components/pages/dashboard/dialog-objective";
+import { GoalItem } from "@/components/pages/dashboard/item-goal";
+import { TaskStatusSummary } from "@/components/pages/dashboard/status-summary";
 import { Textarea } from "@/components/ui/textarea";
-import { useTasks } from "@/hooks/use-tasks";
-import { formatCycleDate } from "@/lib/utils";
+
+const WEEKS = ["Week 01", "Week 02", "Week 03", "Week 04"];
 
 function WeekPage() {
   const {
-    dailyTasks,
     habitTasks,
-    progress,
-    remainingCount,
-    toggleDailyTask,
-    toggleHabitTask,
-    addDailyTask,
+    weeklyGoals,
+    weeklyGoalsProgress,
+    remainingGoalsCount,
+    toggleWeeklyGoal,
+    addWeeklyGoal,
   } = useTasks();
 
-  const [quote, setQuote] = useState<Quote>(QUOTES[0]);
-
-  useEffect(() => {
-    const pickRandom = () => {
-      setQuote(QUOTES[Math.floor(Math.random() * QUOTES.length)]);
-    };
-
-    const timer = setTimeout(pickRandom, 0);
-    return () => clearTimeout(timer);
-  }, []);
+  const [activeWeek, setActiveWeek] = useState("Week 04");
 
   const today = formatCycleDate(new Date());
 
@@ -55,109 +52,148 @@ function WeekPage() {
               Completion
             </p>
             <p
-              className={`text-xl font-black ${progress === 100 ? "text-emerald-600" : "text-zinc-900"}`}
+              className={`text-xl font-black ${weeklyGoalsProgress === 100 ? "text-emerald-600" : "text-zinc-900"}`}
             >
-              {progress}%
+              {weeklyGoalsProgress}%
             </p>
           </div>
           <div className="w-32">
-            <Progress value={progress} className="h-1.5" />
+            <Progress value={weeklyGoalsProgress} className="h-1.5" />
           </div>
         </div>
       </header>
 
       <div className="grid grid-cols-12 gap-10">
-        <div className="col-span-7 space-y-10">
-          <section>
-            <div className="flex justify-between items-center mb-5">
-              <div className="font-bold uppercase flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-zinc-100 border flex items-center justify-center text-zinc-900">
-                  <Target size={14} />
-                </div>
-                <p className="font-heading">Primary Tasks</p>
-              </div>
-              <AddTaskDialog onAdd={addDailyTask} />
-            </div>
-
-            <div className="space-y-2">
-              {dailyTasks.map((task) => (
-                <TaskItem
-                  key={task.id}
-                  task={task}
-                  onToggle={toggleDailyTask}
-                />
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <div className="flex items-center gap-2 mb-5">
-              <div className="font-bold uppercase flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-zinc-100 border flex items-center justify-center text-zinc-900">
-                  <Zap size={14} />
-                </div>
-                <p className="font-heading">Foundational Habits</p>
-              </div>
-            </div>
-            <div className="space-y-2">
-              {habitTasks.map((habit) => (
-                <TaskItem
-                  key={habit.id}
-                  task={habit}
-                  onToggle={toggleHabitTask}
-                  showStatus
-                />
-              ))}
-            </div>
-
-            {remainingCount > 0 ? (
-              <div className="mt-8 flex items-center justify-center p-4 rounded-lg border border-dashed border-amber-300 bg-amber-200/20">
-                <p className="text-xs font-bold text-amber-700 italic flex items-center gap-2">
-                  <Sparkles size={16} className="text-amber-500" />
-                  {remainingCount} objectives remaining for a peak performance
-                  day.
-                </p>
-              </div>
-            ) : (
-              <div className="mt-8 flex items-center justify-center p-4 rounded-lg bg-black text-white shadow-lg">
-                <p className="text-xs font-bold italic flex items-center gap-2">
-                  <Sparkles size={16} className="text-white" />
-                  Day Mastered. All objectives synchronized.
-                </p>
-              </div>
-            )}
-          </section>
-        </div>
-
-        <div className="col-span-5 space-y-8">
-          <Card className="group border-zinc-200 shadow-xs bg-white rounded-xl">
+        {/* Left: Interval & Metrics */}
+        <div className="col-span-3 space-y-6">
+          <Card className="border-zinc-200 shadow-xs">
             <CardContent>
-              <div className="w-10 h-10 rounded-xl bg-zinc-900 flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-105 group-hover:rotate-6">
-                <QuoteIcon size={16} className="text-white" />
+              <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-4">
+                Interval Select
+              </p>
+              <div className="space-y-1">
+                {WEEKS.map((week) => (
+                  <button
+                    key={week}
+                    onClick={() => setActiveWeek(week)}
+                    className={`w-full text-left px-4 py-3 rounded-lg font-bold transition-colors flex justify-between items-center ${
+                      activeWeek === week
+                        ? "bg-black text-white"
+                        : "text-zinc-500 hover:bg-zinc-100 hover:text-black"
+                    }`}
+                  >
+                    <span className="text-xs">{week}</span>
+                    {activeWeek === week && <ArrowUpRight size={14} />}
+                  </button>
+                ))}
               </div>
-              <p className="mt-6 text-xl font-medium leading-relaxed text-zinc-800 tracking-tight italic">
-                &quot;{quote.text}&quot;
-              </p>
-              <p className="mt-4 text-xs font-bold uppercase tracking-widest text-zinc-400">
-                — {quote.author}
-              </p>
             </CardContent>
           </Card>
 
+          <Card className="border-zinc-200 shadow-xs">
+            <CardContent>
+              <div className="flex items-center gap-2 mb-6">
+                <Zap size={14} className="text-zinc-900" />
+                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
+                  Behavioral Metrics
+                </p>
+              </div>
+              <div className="space-y-4">
+                {habitTasks.map((habit) => (
+                  <div key={habit.id}>
+                    <div className="flex justify-between text-xs font-bold mb-1.5">
+                      <span className="text-zinc-600 truncate mr-2">
+                        {habit.title}
+                      </span>
+                      <span
+                        className={`text-[10px] ${
+                          (habit.progress ?? 0) < 50
+                            ? "text-rose-600"
+                            : (habit.progress ?? 0) >= 80
+                              ? "text-emerald-600"
+                              : "text-zinc-900"
+                        }`}
+                      >
+                        {habit.progress ?? 0}%
+                      </span>
+                    </div>
+                    <Progress
+                      value={habit.progress ?? 0}
+                      className="h-1"
+                      indicatorClassName={
+                        (habit.progress ?? 0) < 50
+                          ? "bg-rose-500"
+                          : (habit.progress ?? 0) >= 80
+                            ? "bg-emerald-500"
+                            : "bg-zinc-900"
+                      }
+                    />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Middle: Weekly Goals */}
+        <div className="col-span-6 space-y-10">
+          <section className="bg-white border border-zinc-200 rounded-xl p-8 shadow-xs h-fit">
+            <div className="flex justify-between mb-8">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-900">
+                  <LayoutGrid size={20} />
+                </div>
+                <div>
+                  <p className="text-lg font-bold font-heading text-zinc-900 uppercase">
+                    Weekly Goals
+                  </p>
+                  <p className="text-[10px] font-bold font-heading uppercase text-zinc-400 tracking-widest">
+                    {activeWeek} of Cycle
+                  </p>
+                </div>
+              </div>
+              <CreateObjectiveDialog
+                onAdd={addWeeklyGoal}
+                triggerLabel="New Goal"
+                submitLabel="Set Goal"
+              />
+            </div>
+
+            <div className="space-y-2">
+              {weeklyGoals.map((goal) => (
+                <GoalItem
+                  key={goal.id}
+                  goal={goal}
+                  onToggle={toggleWeeklyGoal}
+                />
+              ))}
+            </div>
+
+            <TaskStatusSummary
+              remainingCount={remainingGoalsCount}
+              type="week"
+            />
+          </section>
+        </div>
+
+        {/* Right: Review */}
+        <div className="col-span-3 space-y-6">
           <Card className="bg-zinc-900 text-white border-none shadow-xl">
             <CardContent>
-              <div className="flex items-center gap-3 mb-6 relative">
+              <div className="flex items-center gap-2 mb-6 relative">
                 <div className="w-9 h-9 rounded-lg bg-zinc-800 flex items-center justify-center text-white">
-                  <Sparkles size={16} />
+                  <MessageSquare size={16} />
                 </div>
-                <p className="font-bold text-lg uppercase">Daily Insight</p>
+                <p className="font-bold text-base uppercase tracking-tight">
+                  Review
+                </p>
               </div>
               <Textarea
-                className="bg-zinc-800 border-zinc-700 rounded-lg p-4 text-xs text-zinc-200 resize-none h-40 relative placeholder:text-zinc-600 leading-relaxed"
-                placeholder="Record a strategic breakthrough from today..."
+                className="bg-zinc-800 border-zinc-700 rounded-lg p-4 text-xs text-zinc-200 resize-none h-44 placeholder:text-zinc-600 leading-relaxed"
+                placeholder="Strategic feedback for next interval..."
               />
-              <Button className="w-full mt-4 bg-white text-black py-6 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-zinc-100 relative">
-                Save to Journal
+              <Button className="w-full mt-4 bg-white text-black py-6 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-zinc-100 shadow-md">
+                Submit Review
               </Button>
             </CardContent>
           </Card>
