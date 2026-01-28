@@ -9,7 +9,6 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  Cell,
 } from "recharts";
 import { useHabits } from "@/hooks/use-habits";
 import { Card, CardContent } from "@/components/ui/card";
@@ -50,11 +49,11 @@ function MonthPage() {
     <div className="pb-10">
       <header className="flex justify-between items-center mb-10 gap-6">
         <div>
-          <p className="text-3xl font-bold tracking-tight text-zinc-900 mb-2">
+          <p className="text-3xl font-bold tracking-tight text-zinc-900 mb-1">
             {MONTHS[currentMonth - 1]}{" "}
             <span className="text-zinc-300">/ 2026</span>
           </p>
-          <p className="text-zinc-500 mt-1 text-sm font-bold uppercase tracking-widest text-[10px]">
+          <p className="text-zinc-500 mt-2 font-bold uppercase tracking-widest text-[10px]">
             Monthly behavioral consistency analysis.
           </p>
         </div>
@@ -75,22 +74,20 @@ function MonthPage() {
         </div>
       </header>
 
-      <div className="grid grid-cols-12 gap-5 mb-10">
+      <div className="grid grid-cols-12 gap-6 mb-10">
         <Card className="col-span-8 border-zinc-200 shadow-xs">
           <CardContent className="flex flex-col justify-center h-full">
-            <div className="flex justify-between items-center mb-5">
+            <div className="flex justify-between mb-5">
               <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest">
                 Discipline Index
               </p>
-              <p className="text-3xl font-black text-black">
-                {overallDiscipline}%
-              </p>
+              <p className="text-3xl font-black">{overallDiscipline}%</p>
             </div>
             <Progress
               value={overallDiscipline}
-              className="h-1.5"
+              className="h-1.5 bg-zinc-200"
               indicatorClassName={
-                overallDiscipline < 50
+                overallDiscipline < 40
                   ? "bg-rose-500"
                   : overallDiscipline > 80
                     ? "bg-emerald-500"
@@ -101,11 +98,11 @@ function MonthPage() {
         </Card>
 
         <Card className="col-span-2 border-zinc-200 shadow-xs">
-          <CardContent className="flex flex-col items-center justify-center text-center h-full">
+          <CardContent className="flex flex-col items-center justify-center h-full">
             <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-2">
               Metrics
             </p>
-            <p className="text-3xl font-black text-black">{habits.length}</p>
+            <p className="text-3xl font-bold">{habits.length}</p>
           </CardContent>
         </Card>
 
@@ -119,20 +116,20 @@ function MonthPage() {
         </div>
       </div>
 
-      <div className="overflow-x-auto border border-zinc-200 rounded-t-xl rounded-b-sm shadow-xs overflow-hidden mb-10">
+      <div className="overflow-x-auto border border-zinc-200 rounded-t-xl rounded-b-sm shadow-xs mb-10">
         <Table>
           <TableHeader className="bg-white">
-            <TableRow className="">
-              <TableHead className="p-4 w-44 bg-white sticky left-0 z-10 border-r text-xs font-bold uppercase tracking-widest text-zinc-400">
+            <TableRow>
+              <TableHead className="p-4 w-44 sticky left-0 z-10 border-r text-xs font-bold uppercase tracking-widest text-zinc-400 bg-white">
                 Metric Title
               </TableHead>
-              <TableHead className="w-20 text-center text-xs font-bold uppercase tracking-widest text-zinc-400">
+              <TableHead className="p-4w-20 text-center text-xs font-bold uppercase tracking-widest text-zinc-400">
                 Eff%
               </TableHead>
               {days.map((day) => (
                 <TableHead
                   key={day}
-                  className="px-1.5 py-4 text-center text-xs font-bold text-zinc-300 min-w-8.75"
+                  className="text-center text-xs font-bold text-zinc-400 min-w-9"
                 >
                   {day}
                 </TableHead>
@@ -141,24 +138,27 @@ function MonthPage() {
           </TableHeader>
           <TableBody className="bg-white">
             {habits.map((habit) => (
-              <TableRow
-                key={habit.id}
-                className="group transition-colors hover:bg-zinc-50"
-              >
-                <TableCell className="p-4 sticky left-0 z-10 bg-white group-hover:bg-zinc-50 border-r text-xs font-bold text-zinc-900">
+              <TableRow key={habit.id}>
+                <TableCell className="p-4 sticky left-0 z-10 bg-white border-r text-xs font-bold text-zinc-900">
                   {habit.title}
                 </TableCell>
                 <TableCell className="p-4 text-center">
                   <p
-                    className={`font-semibold text-xs ${habit.progress < 50 ? "text-rose-600" : "text-zinc-900"}`}
+                    className={`font-semibold text-xs ${
+                      habit.progress < 40
+                        ? "text-rose-600"
+                        : habit.progress > 80
+                          ? "text-emerald-600"
+                          : "text-zinc-900"
+                    }`}
                   >
                     {habit.progress}%
                   </p>
                 </TableCell>
                 {habit.history.map((done, idx) => (
-                  <TableCell key={idx} className="px-1.5 py-4 text-center">
+                  <TableCell key={idx}>
                     <div
-                      className={`w-4 h-4 mx-auto rounded flex items-center justify-center transition-all ${
+                      className={`w-4 h-4 mx-auto rounded flex items-center justify-center ${
                         done
                           ? "bg-black text-white"
                           : "bg-zinc-50 border border-zinc-200"
@@ -179,7 +179,7 @@ function MonthPage() {
           <CardContent>
             <div className="flex justify-between items-center mb-8">
               <div className="flex items-center gap-2">
-                <TrendingUp className="text-zinc-400" size={16} />
+                <TrendingUp className="text-zinc-400" size={18} />
                 <p className="font-bold text-base text-zinc-900 uppercase tracking-tight">
                   Activity Analytics
                 </p>
@@ -188,7 +188,7 @@ function MonthPage() {
                 31-day cycle
               </p>
             </div>
-            <div className="h-60 w-full font-sans">
+            <div className="h-60 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={consistencyData}
@@ -200,6 +200,7 @@ function MonthPage() {
                     tickLine={false}
                     tick={{ fontSize: 10, fill: "#A1A1AA" }}
                   />
+
                   <Tooltip
                     cursor={{ fill: "#f4f4f5" }}
                     contentStyle={{
@@ -210,68 +211,78 @@ function MonthPage() {
                       fontWeight: "bold",
                     }}
                   />
-                  <Bar dataKey="value" radius={[2, 2, 2, 2]} barSize={8}>
-                    {consistencyData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={entry.value > 85 ? "#000000" : "#e4e4e7"}
-                      />
-                    ))}
-                  </Bar>
+
+                  <Bar
+                    dataKey="value"
+                    barSize={8}
+                    radius={[2, 2, 2, 2]}
+                    shape={(props) => {
+                      const { x, y, width, height, payload } = props;
+                      const fill = payload.value > 85 ? "#000000" : "#e4e4e7";
+                      return (
+                        <rect
+                          x={x}
+                          y={y}
+                          width={width}
+                          height={height}
+                          rx={2}
+                          ry={2}
+                          fill={fill}
+                        />
+                      );
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="col-span-12 lg:col-span-5 bg-zinc-900 text-white border-none shadow-xl relative overflow-hidden">
+        <Card className="col-span-12 lg:col-span-5 bg-zinc-900 text-white border-none">
           <CardContent className="flex flex-col h-full">
-            <div className="flex items-center gap-3 mb-10">
-              <div className="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center text-zinc-400">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400">
                 <AlertCircle size={20} />
               </div>
-              <p className="text-xl font-bold uppercase tracking-tight">
+              <p className="text-2xl font-semibold uppercase font-heading">
                 System Insights
               </p>
             </div>
 
             <div className="space-y-6 flex-1">
-              <div className="bg-zinc-800/50 p-6 rounded-xl border border-zinc-700/30">
+              <div className="bg-zinc-800/50 p-6 rounded-lg border border-zinc-700/30">
                 <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-2">
                   Momentum
                 </p>
                 <div className="flex items-baseline gap-2">
                   <p className="text-4xl font-black text-emerald-400">12</p>
-                  <p className="text-zinc-400 text-xs font-bold uppercase">
+                  <p className="text-zinc-400 text-xs font-bold uppercase tracking-wide">
                     Streak
                   </p>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-zinc-800/50 p-6 rounded-xl border border-zinc-700/30">
+                <div className="bg-zinc-800/50 p-6 rounded-lg border border-zinc-700/30">
                   <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-2">
                     Stability
                   </p>
-                  <p className="text-xl font-black text-amber-500 uppercase">
+                  <p className="text-xl font-bold tracking-wide text-amber-500 uppercase">
                     Optimal
                   </p>
                 </div>
-                <div className="bg-zinc-800/50 p-6 rounded-xl border border-zinc-700/30">
+                <div className="bg-zinc-800/50 p-6 rounded-lg border border-zinc-700/30">
                   <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-2">
                     Priority
                   </p>
-                  <p className="text-xl font-black text-rose-500 uppercase">
+                  <p className="text-xl font-bold tracking-wide text-rose-500 uppercase">
                     High
                   </p>
                 </div>
               </div>
             </div>
 
-            <Button
-              variant="outline"
-              className="mt-10 bg-white text-black py-7 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-zinc-100 border-none shadow-lg"
-            >
+            <Button className="mt-5 bg-white text-black py-7 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-zinc-100">
               Download Full Report
             </Button>
           </CardContent>

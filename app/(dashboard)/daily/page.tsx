@@ -44,7 +44,7 @@ function DailyPage() {
         <div>
           <div className="flex items-center gap-2 text-zinc-500 mb-2">
             <Clock size={12} />
-            <p className="text-xs  uppercase tracking-widest font-semibold">
+            <p className="text-xs uppercase tracking-widest font-semibold">
               {today}
             </p>
           </div>
@@ -56,13 +56,29 @@ function DailyPage() {
               Efficiency
             </p>
             <p
-              className={`text-xl font-black ${progress === 100 ? "text-emerald-600" : "text-zinc-900"}`}
+              className={`text-xl font-black ${
+                progress < 40
+                  ? "text-rose-600"
+                  : progress > 80
+                    ? "text-emerald-600"
+                    : "text-zinc-900"
+              }`}
             >
               {progress}%
             </p>
           </div>
           <div className="w-32">
-            <Progress value={progress} className="h-1.5" />
+            <Progress
+              value={progress}
+              className="h-1.5 bg-zinc-200"
+              indicatorClassName={
+                progress < 40
+                  ? "bg-rose-500"
+                  : progress > 80
+                    ? "bg-emerald-500"
+                    : "bg-zinc-900"
+              }
+            />
           </div>
         </div>
       </header>

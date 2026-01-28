@@ -54,10 +54,10 @@ export default function Sidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-200 group ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors duration-300 group ${
                   isActive
                     ? "bg-black text-white shadow-sm"
-                    : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"
+                    : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900"
                 }`}
               >
                 <Icon

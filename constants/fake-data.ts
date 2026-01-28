@@ -1,4 +1,13 @@
-import { Task, Quote, WeeklyGoal, Habit } from "@/types/app.type";
+import {
+  Task,
+  Quote,
+  WeeklyGoal,
+  Habit,
+  MonthlyData,
+  StatusDistribution,
+  QuarterInfo,
+  ReflectionPrompt,
+} from "@/types/app.type";
 
 export const QUOTES: Quote[] = [
   {
@@ -21,6 +30,70 @@ export const QUOTES: Quote[] = [
     text: "A journey of a thousand miles begins with a single step.",
     author: "Lao Tzu",
   },
+];
+
+export const MONTHLY_REFLECTION_PROMPTS: ReflectionPrompt[] = [
+  {
+    id: "1",
+    text: "What was your biggest accomplishment this month?",
+    answered: true,
+  },
+  {
+    id: "2",
+    text: "What was your most challenging moment and how did you navigate it?",
+    answered: false,
+  },
+  {
+    id: "3",
+    text: "Which habit was hardest to maintain and why?",
+    answered: false,
+  },
+];
+
+export const YEARLY_REFLECTION_PROMPTS: ReflectionPrompt[] = [
+  {
+    id: "4",
+    text: "What are you most proud of from this past year?",
+    answered: true,
+  },
+  {
+    id: "5",
+    text: "What was the single most valuable lesson you learned?",
+    answered: false,
+  },
+  {
+    id: "6",
+    text: "How have you changed as a person since January?",
+    answered: false,
+  },
+];
+
+export const YEARLY_MONTHLY_DATA: MonthlyData[] = [
+  { name: "Jan", value: 85 },
+  { name: "Feb", value: 78 },
+  { name: "Mar", value: 92 },
+  { name: "Apr", value: 64 },
+  { name: "May", value: 80 },
+  { name: "Jun", value: 72 },
+  { name: "Jul", value: 0 },
+  { name: "Aug", value: 0 },
+  { name: "Sep", value: 0 },
+  { name: "Oct", value: 0 },
+  { name: "Nov", value: 0 },
+  { name: "Dec", value: 0 },
+];
+
+export const YEARLY_STATUS_DISTRIBUTION: StatusDistribution[] = [
+  { name: "Done", value: 2, fill: "#10b981" },
+  { name: "In Progress", value: 3, fill: "#000000" },
+  { name: "Waiting", value: 1, fill: "#a1a1aa" },
+];
+
+export const YEARLY_QUARTERS: QuarterInfo[] = [
+  { id: 1, label: "Q1 2026", progress: 50, completed: 1, total: 2 },
+  { id: 2, label: "Q2 2026", progress: 50, completed: 1, total: 2 },
+  { id: 3, label: "Q3 2026", progress: 0, completed: 0, total: 1 },
+  { id: 4, label: "Q4 2026", progress: 0, completed: 0, total: 1 },
 ];
 
 export const INITIAL_DAILY_TASKS: Task[] = [

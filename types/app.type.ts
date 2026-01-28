@@ -37,12 +37,29 @@ export interface ReflectionEntry {
   period: string;
 }
 
+export interface ReflectionPrompt {
+  id: string;
+  text: string;
+  answered: boolean;
+}
+
 export interface QuarterInfo {
   id: number;
   label: string;
   progress: number;
   completed: number;
   total: number;
+}
+
+export interface MonthlyData {
+  name: string;
+  value: number;
+}
+
+export interface StatusDistribution {
+  name: string;
+  value: number;
+  fill: string;
 }
 
 export interface Task {

@@ -52,13 +52,29 @@ function WeekPage() {
               Completion
             </p>
             <p
-              className={`text-xl font-black ${weeklyGoalsProgress === 100 ? "text-emerald-600" : "text-zinc-900"}`}
+              className={`text-xl font-black ${
+                weeklyGoalsProgress < 40
+                  ? "text-rose-600"
+                  : weeklyGoalsProgress > 80
+                    ? "text-emerald-600"
+                    : "text-zinc-900"
+              }`}
             >
               {weeklyGoalsProgress}%
             </p>
           </div>
           <div className="w-32">
-            <Progress value={weeklyGoalsProgress} className="h-1.5" />
+            <Progress
+              value={weeklyGoalsProgress}
+              className="h-1.5 bg-zinc-200"
+              indicatorClassName={
+                weeklyGoalsProgress < 40
+                  ? "bg-rose-500"
+                  : weeklyGoalsProgress > 80
+                    ? "bg-emerald-500"
+                    : "bg-zinc-900"
+              }
+            />
           </div>
         </div>
       </header>
@@ -107,9 +123,9 @@ function WeekPage() {
                       </span>
                       <span
                         className={`text-[10px] ${
-                          (habit.progress ?? 0) < 50
+                          (habit.progress ?? 0) < 40
                             ? "text-rose-600"
-                            : (habit.progress ?? 0) >= 80
+                            : (habit.progress ?? 0) > 80
                               ? "text-emerald-600"
                               : "text-zinc-900"
                         }`}
@@ -119,11 +135,11 @@ function WeekPage() {
                     </div>
                     <Progress
                       value={habit.progress ?? 0}
-                      className="h-1"
+                      className="h-1 bg-zinc-200"
                       indicatorClassName={
-                        (habit.progress ?? 0) < 50
+                        (habit.progress ?? 0) < 40
                           ? "bg-rose-500"
-                          : (habit.progress ?? 0) >= 80
+                          : (habit.progress ?? 0) > 80
                             ? "bg-emerald-500"
                             : "bg-zinc-900"
                       }
