@@ -10,10 +10,19 @@ import {
   Sun,
   LogOut,
   Settings,
+  Menu,
 } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { APP_NAME } from "@/constants/app.constant";
 import { Button } from "../ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 
 const navItems = [
   { href: ROUTES.DASHBOARD.DAILY, label: "Daily", icon: Sun },
@@ -27,11 +36,11 @@ const navItems = [
   },
 ];
 
-export default function Sidebar() {
+export function SidebarContent() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 border-r border-zinc-200 flex flex-col justify-between py-8 px-4 h-full bg-white shrink-0">
+    <div className="flex flex-col justify-between h-full bg-white py-8 px-4">
       <div>
         {/* Logo */}
         <div className="mb-10 px-2 flex items-center gap-3">
@@ -111,10 +120,43 @@ export default function Sidebar() {
             size="icon"
             className="text-zinc-400 hover:text-rose-500 hover:bg-rose-50"
           >
-            <LogOut size={4} />
+            <LogOut size={16} />
           </Button>
         </div>
       </div>
-    </aside>
+    </div>
+  );
+}
+
+export default function Sidebar() {
+  return (
+    <>
+      <div className="xl:hidden fixed top-6 left-6 z-40">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="w-10 h-10 rounded-lg shadow-xl bg-white border-zinc-200"
+            >
+              <Menu className="text-zinc-600" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-72">
+            <SheetHeader className="sr-only">
+              <SheetTitle>{APP_NAME} Navigation</SheetTitle>
+              <SheetDescription>
+                Main navigation menu for dashboard links and settings.
+              </SheetDescription>
+            </SheetHeader>
+            <SidebarContent />
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      <aside className="hidden xl:flex w-64 border-r border-zinc-200 flex-col h-full bg-white shrink-0">
+        <SidebarContent />
+      </aside>
+    </>
   );
 }

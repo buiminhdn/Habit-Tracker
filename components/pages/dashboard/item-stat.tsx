@@ -22,7 +22,7 @@ export function StatCard({
     <Card className="shadow-xs border-zinc-200 group">
       <CardContent>
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-9 h-9 bg-black rounded-lg flex items-center justify-center text-white transition-transform duration-300 group-hover:scale-105 group-hover:rotate-6">
+          <div className="shrink-0 w-9 h-9 bg-black rounded-lg flex items-center justify-center text-white transition-transform duration-300 group-hover:scale-105 group-hover:rotate-6">
             {icon}
           </div>
           <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest">

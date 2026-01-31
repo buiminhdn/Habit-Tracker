@@ -36,7 +36,7 @@ function WeekPage() {
 
   return (
     <div className="pb-10">
-      <header className="flex justify-between items-center mb-10 gap-6">
+      <header className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-6">
         <div>
           <div className="flex items-center gap-2 text-zinc-500 mb-2">
             <Clock size={12} />
@@ -46,7 +46,7 @@ function WeekPage() {
           </div>
           <p className="text-3xl font-bold font-heading">Weekly Strategy</p>
         </div>
-        <div className="bg-white border border-zinc-200 shadow-xs p-4 rounded-lg flex items-center gap-5">
+        <div className="w-full sm:w-fit bg-white border border-zinc-200 shadow-xs p-4 rounded-lg flex items-center gap-5">
           <div className="text-right">
             <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
               Completion
@@ -63,7 +63,7 @@ function WeekPage() {
               {weeklyGoalsProgress}%
             </p>
           </div>
-          <div className="w-32">
+          <div className="w-full sm:w-32">
             <Progress
               value={weeklyGoalsProgress}
               className="h-1.5 bg-zinc-200"
@@ -79,9 +79,9 @@ function WeekPage() {
         </div>
       </header>
 
-      <div className="grid grid-cols-12 gap-10">
+      <div className="grid grid-cols-12 gap-4 lg:gap-10">
         {/* Left: Interval & Metrics */}
-        <div className="col-span-3 space-y-6">
+        <div className="col-span-12 md:col-span-3 space-y-4 md:space-y-6">
           <Card className="border-zinc-200 shadow-xs">
             <CardContent>
               <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-4">
@@ -151,68 +151,70 @@ function WeekPage() {
           </Card>
         </div>
 
-        {/* Middle: Weekly Goals */}
-        <div className="col-span-6 space-y-10">
-          <section className="bg-white border border-zinc-200 rounded-xl p-8 shadow-xs h-fit">
-            <div className="flex justify-between mb-8">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-900">
-                  <LayoutGrid size={20} />
+        <div className="col-span-12 md:col-span-9 gap-4 lg:gap-10 grid grid-cols-9">
+          {/* Middle: Weekly Goals */}
+          <div className="col-span-9 lg:col-span-6 space-y-10">
+            <section className="bg-white border border-zinc-200 rounded-xl p-8 shadow-xs h-fit">
+              <div className="flex justify-between mb-8">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-900">
+                    <LayoutGrid size={20} />
+                  </div>
+                  <div>
+                    <p className="text-lg font-bold font-heading text-zinc-900 uppercase">
+                      Weekly Goals
+                    </p>
+                    <p className="text-[10px] font-bold font-heading uppercase text-zinc-400 tracking-widest">
+                      {activeWeek} of Cycle
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-lg font-bold font-heading text-zinc-900 uppercase">
-                    Weekly Goals
-                  </p>
-                  <p className="text-[10px] font-bold font-heading uppercase text-zinc-400 tracking-widest">
-                    {activeWeek} of Cycle
-                  </p>
-                </div>
-              </div>
-              <CreateObjectiveDialog
-                onAdd={addWeeklyGoal}
-                triggerLabel="New Goal"
-                submitLabel="Set Goal"
-              />
-            </div>
-
-            <div className="space-y-2">
-              {weeklyGoals.map((goal) => (
-                <GoalItem
-                  key={goal.id}
-                  goal={goal}
-                  onToggle={toggleWeeklyGoal}
+                <CreateObjectiveDialog
+                  onAdd={addWeeklyGoal}
+                  triggerLabel="New Goal"
+                  submitLabel="Set Goal"
                 />
-              ))}
-            </div>
-
-            <TaskStatusSummary
-              remainingCount={remainingGoalsCount}
-              type="week"
-            />
-          </section>
-        </div>
-
-        {/* Right: Review */}
-        <div className="col-span-3 space-y-6">
-          <Card className="bg-zinc-900 text-white border-none shadow-xl">
-            <CardContent>
-              <div className="flex items-center gap-2 mb-6 relative">
-                <div className="w-9 h-9 rounded-lg bg-zinc-800 flex items-center justify-center text-white">
-                  <MessageSquare size={16} />
-                </div>
-                <p className="font-bold text-base uppercase tracking-tight">
-                  Review
-                </p>
               </div>
-              <Textarea
-                className="bg-zinc-800 border-zinc-700 rounded-lg p-4 text-xs text-zinc-200 resize-none h-44 placeholder:text-zinc-600 leading-relaxed"
-                placeholder="Strategic feedback for next interval..."
+
+              <div className="space-y-2">
+                {weeklyGoals.map((goal) => (
+                  <GoalItem
+                    key={goal.id}
+                    goal={goal}
+                    onToggle={toggleWeeklyGoal}
+                  />
+                ))}
+              </div>
+
+              <TaskStatusSummary
+                remainingCount={remainingGoalsCount}
+                type="week"
               />
-              <Button className="w-full mt-4 bg-white text-black py-6 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-zinc-100 shadow-md">
-                Submit Review
-              </Button>
-            </CardContent>
-          </Card>
+            </section>
+          </div>
+
+          {/* Right: Review */}
+          <div className="col-span-9 lg:col-span-3 space-y-6">
+            <Card className="bg-zinc-900 text-white border-none shadow-xl">
+              <CardContent>
+                <div className="flex items-center gap-2 mb-6 relative">
+                  <div className="w-9 h-9 rounded-lg bg-zinc-800 flex items-center justify-center text-white">
+                    <MessageSquare size={16} />
+                  </div>
+                  <p className="font-bold text-base uppercase tracking-tight">
+                    Review
+                  </p>
+                </div>
+                <Textarea
+                  className="bg-zinc-800 border-zinc-700 rounded-lg p-4 text-xs text-zinc-200 resize-none h-44 placeholder:text-zinc-600 leading-relaxed"
+                  placeholder="Strategic feedback for next interval..."
+                />
+                <Button className="w-full mt-4 bg-white text-black py-6 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-zinc-100 shadow-md">
+                  Submit Review
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

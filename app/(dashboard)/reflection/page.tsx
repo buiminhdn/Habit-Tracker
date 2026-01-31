@@ -35,8 +35,8 @@ export default function ReflectionPage() {
 
   return (
     <div className="pb-10">
-      <header className="flex justify-between mb-10 gap-6">
-        <div>
+      <header className="flex flex-col sm:flex-row justify-between mb-10 gap-4 sm:gap-6">
+        <div className="text-center sm:text-left">
           <p className="text-3xl font-bold tracking-tight text-zinc-900">
             Reflection
           </p>
@@ -44,7 +44,7 @@ export default function ReflectionPage() {
             Strategic growth synthesis and retrospective.
           </p>
         </div>
-        <div className="flex bg-zinc-100 p-1 h-fit rounded-xl border border-zinc-200">
+        <div className="mx-auto sm:mx-0 flex bg-zinc-100 p-1 h-fit w-fit rounded-xl border border-zinc-200">
           <button
             onClick={() => setReflectionType("MONTH")}
             className={`px-6 py-2 rounded-lg border text-xs font-bold uppercase tracking-widest ${
@@ -69,7 +69,7 @@ export default function ReflectionPage() {
       </header>
 
       {reflectionType === "MONTH" && (
-        <div className="flex gap-2 mb-10 overflow-x-auto pb-3 no-scrollbar">
+        <div className="flex flex-wrap gap-2 mb-10 pb-3 no-scrollbar">
           <div className="flex items-center pr-4 border-r-2 mr-2 border-zinc-200 text-zinc-400">
             <History size={24} />
           </div>
@@ -104,7 +104,7 @@ export default function ReflectionPage() {
           />
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {currentQuestions.map((q) => (
             <ItemReflection
               key={q.id}

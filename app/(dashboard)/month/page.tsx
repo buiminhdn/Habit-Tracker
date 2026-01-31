@@ -47,9 +47,9 @@ function MonthPage() {
 
   return (
     <div className="pb-10">
-      <header className="flex justify-between items-center mb-10 gap-6">
+      <header className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 md:gap-6">
         <div>
-          <p className="text-3xl font-bold tracking-tight text-zinc-900 mb-1">
+          <p className="text-center md:text-left text-3xl font-bold tracking-tight text-zinc-900 mb-1">
             {MONTHS[currentMonth - 1]}{" "}
             <span className="text-zinc-300">/ 2026</span>
           </p>
@@ -74,8 +74,8 @@ function MonthPage() {
         </div>
       </header>
 
-      <div className="grid grid-cols-12 gap-6 mb-10">
-        <Card className="col-span-8 border-zinc-200 shadow-xs">
+      <div className="grid grid-cols-12 gap-4 lg:gap-6 mb-10">
+        <Card className="col-span-12 md:col-span-8 border-zinc-200 shadow-xs">
           <CardContent className="flex flex-col justify-center h-full">
             <div className="flex justify-between mb-5">
               <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest">
@@ -97,7 +97,7 @@ function MonthPage() {
           </CardContent>
         </Card>
 
-        <Card className="col-span-2 border-zinc-200 shadow-xs">
+        <Card className="col-span-6 md:col-span-2 border-zinc-200 shadow-xs">
           <CardContent className="flex flex-col items-center justify-center h-full">
             <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-2">
               Metrics
@@ -106,7 +106,7 @@ function MonthPage() {
           </CardContent>
         </Card>
 
-        <div className="col-span-2">
+        <div className="col-span-6 md:col-span-2">
           <CreateObjectiveDialog
             triggerLabel="Add Metric"
             triggerVariant="default"
@@ -174,7 +174,7 @@ function MonthPage() {
         </Table>
       </div>
 
-      <div className="grid grid-cols-12 gap-10">
+      <div className="grid grid-cols-12 gap-4 lg:gap-10">
         <Card className="col-span-12 lg:col-span-7 border-zinc-200 shadow-xs h-fit">
           <CardContent>
             <div className="flex justify-between items-center mb-8">

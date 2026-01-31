@@ -39,7 +39,7 @@ export default function YearPage() {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-8">
         <StatCard
           icon={<Rocket size={16} />}
           title="Strategic Targets"
@@ -63,7 +63,7 @@ export default function YearPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-8 mb-8">
         <Card className="lg:col-span-3 shadow-xs border-zinc-200">
           <CardContent>
             <div className="flex items-center gap-3 mb-8">
@@ -124,7 +124,7 @@ export default function YearPage() {
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-2 shadow-xs border-zinc-100">
+        <Card className="lg:col-span-2 shadow-xs border-zinc-200">
           <CardContent>
             <p className="font-bold text-base mb-6 text-zinc-900 uppercase">
               Status Distribution
@@ -166,7 +166,7 @@ export default function YearPage() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {quarters.map((q) => (
           <QuarterCard key={q.id} quarter={q} />
         ))}
