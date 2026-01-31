@@ -64,7 +64,7 @@ export default function YearPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-8">
-        <Card className="lg:col-span-3 shadow-xs border-zinc-100">
+        <Card className="lg:col-span-3 shadow-xs border-zinc-200">
           <CardContent>
             <div className="flex items-center gap-3 mb-8">
               <Activity className="text-zinc-400" size={18} />

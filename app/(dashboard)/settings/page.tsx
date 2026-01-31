@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, AlertTriangle } from "lucide-react";
 import { useSettings } from "@/hooks/use-settings";
 import { SETTINGS_SECTIONS } from "@/constants/settings.constant";
-import { SettingItem, UserSettings } from "@/types/app.type";
+import { SettingItem } from "@/types/app.type";
 import {
   Dialog,
   DialogContent,
@@ -20,14 +20,21 @@ import { SettingSync } from "@/components/pages/settings/setting-sync";
 import { SettingAppearance } from "@/components/pages/settings/setting-appearance";
 import { SettingLanguage } from "@/components/pages/settings/setting-language";
 import { SettingSecurity } from "@/components/pages/settings/setting-security";
-import { SettingBilling } from "@/components/pages/settings/setting-billing";
 
 export default function SettingsPage() {
-  const { settings, isLoading, updateSettings } = useSettings();
+  const { settings, updateSettings } = useSettings();
   const [activeModal, setActiveModal] = useState<SettingItem | null>(null);
 
   const renderModalContent = () => {
     if (!activeModal) return null;
+
+    if (!settings) {
+      return (
+        <div className="flex items-center justify-center py-10">
+          <div className="w-6 h-6 border-2 border-zinc-200 border-t-black rounded-full animate-spin" />
+        </div>
+      );
+    }
 
     switch (activeModal.id) {
       case "personal":
@@ -63,8 +70,6 @@ export default function SettingsPage() {
             updateSettings={updateSettings}
           />
         );
-      case "billing":
-        return <SettingBilling settings={settings} />;
       default:
         return (
           <div className="py-10 text-center text-zinc-400 italic text-sm">
@@ -76,11 +81,11 @@ export default function SettingsPage() {
 
   return (
     <div className="pb-10">
-      <header className="mb-12">
-        <p className="text-3xl font-extrabold tracking-tight text-zinc-900">
+      <header className="mb-10">
+        <p className="text-3xl font-bold tracking-tight text-zinc-900 mb-1">
           Settings
         </p>
-        <p className="text-zinc-500 mt-1 text-sm">
+        <p className="text-zinc-500 mt-2 font-bold uppercase tracking-widest text-[10px]">
           Configure your personal and workspace preferences.
         </p>
       </header>
@@ -89,62 +94,70 @@ export default function SettingsPage() {
         {SETTINGS_SECTIONS.map((section) => {
           const Icon = section.icon;
           return (
-            <Card
+            <div
               key={section.title}
-              className="rounded-2xl shadow-sm overflow-hidden border-zinc-100"
+              className="rounded-xl shadow-xs overflow-hidden border border-zinc-200"
             >
-              <div className="px-6 py-4 bg-zinc-50/50 border-b border-zinc-100 flex items-center gap-3">
-                <Icon size={16} className="text-zinc-400" />
-                <p className="text-xs font-black uppercase tracking-widest text-zinc-500">
+              <div className="px-6 py-4 bg-zinc-50 border-b border-zinc-200 flex items-center gap-3">
+                <Icon size={20} className="text-zinc-500" />
+                <p className="text-xs font-bold uppercase tracking-widest text-zinc-600">
                   {section.title}
                 </p>
               </div>
-              <div className="divide-y divide-zinc-50">
+              <div className="divide-y divide-zinc-100 bg-white">
                 {section.items.map((item) => (
                   <button
                     key={item.label}
                     onClick={() => setActiveModal(item)}
-                    className="w-full text-left px-6 py-6 hover:bg-zinc-50/30 transition-all flex items-center justify-between group"
+                    className="w-full text-left px-6 py-6 hover:bg-zinc-50 flex items-center justify-between group"
                   >
                     <div>
-                      <p className="text-sm font-bold text-zinc-900 tracking-tight">
+                      <p className="text-sm font-bold text-zinc-900">
                         {item.label}
                       </p>
                       <p className="text-xs text-zinc-400 mt-1">{item.sub}</p>
                     </div>
                     <ChevronRight
                       size={16}
-                      className="text-zinc-200 group-hover:text-zinc-400 translate-x-0 group-hover:translate-x-1 transition-all"
+                      className="text-zinc-200 group-hover:text-zinc-600 translate-x-0 group-hover:translate-x-1 transition-all"
                     />
                   </button>
                 ))}
               </div>
-            </Card>
+            </div>
           );
         })}
 
-        <div className="pt-10 border-t border-zinc-100 flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-          <div className="space-y-1">
-            <p className="text-sm font-bold text-zinc-900 uppercase tracking-tight">
+        <div className="rounded-xl shadow-xs overflow-hidden border border-rose-200">
+          <div className="px-6 py-4 bg-rose-50 border-b border-rose-200 flex items-center gap-3">
+            <AlertTriangle size={20} className="text-rose-500" />
+            <p className="text-xs font-bold uppercase tracking-widest text-rose-600">
               Danger Zone
             </p>
-            <p className="text-xs text-zinc-400">
-              Irreversible actions regarding your account and data.
-            </p>
           </div>
-          <Button
-            variant="outline"
-            className="text-rose-500 hover:text-white hover:bg-rose-500 border-rose-100 px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest"
-          >
-            Delete Workspace Data
-          </Button>
+          <div className="p-6 bg-white flex gap-4 items-center justify-between">
+            <div>
+              <p className="text-sm font-bold text-zinc-900">
+                Delete workspace
+              </p>
+              <p className="text-xs text-zinc-400 mt-1">
+                Irreversible actions regarding your account and data.
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              className="text-rose-600 hover:text-white hover:bg-red-600 border-rose-100 rounded-sm text-xs font-bold uppercase tracking-widest"
+            >
+              Delete Workspace Data
+            </Button>
+          </div>
         </div>
       </div>
 
       <Dialog open={!!activeModal} onOpenChange={() => setActiveModal(null)}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent>
           <DialogHeader>
-            <DialogTitle className="text-sm font-black uppercase tracking-widest">
+            <DialogTitle className="font-bold uppercase">
               {activeModal?.label}
             </DialogTitle>
           </DialogHeader>

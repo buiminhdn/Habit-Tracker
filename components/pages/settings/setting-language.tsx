@@ -2,36 +2,72 @@
 
 import React from "react";
 import { UserSettings } from "@/types/app.type";
-import { Check } from "lucide-react";
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldLabel,
+  FieldTitle,
+} from "@/components/ui/field";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 interface SettingLanguageProps {
   settings: UserSettings;
   updateSettings: (newSettings: Partial<UserSettings>) => Promise<void>;
 }
 
+const LANGUAGES = [
+  {
+    code: "en",
+    label: "English (US)",
+    description: "United States",
+    flag: "/images/flag-us.png",
+  },
+  {
+    code: "vi",
+    label: "Tiếng Việt",
+    description: "Việt Nam",
+    flag: "/images/flag-vn.png",
+  },
+];
+
 export function SettingLanguage({
   settings,
   updateSettings,
 }: SettingLanguageProps) {
   return (
-    <div className="space-y-2 pt-4">
-      {[
-        { code: "en", label: "English (US)" },
-        { code: "vi", label: "Tiếng Việt" },
-        { code: "jp", label: "日本語" },
-        { code: "fr", label: "Français" },
-      ].map((lang) => (
-        <button
-          key={lang.code}
-          className="w-full flex items-center justify-between p-4 rounded-xl border border-zinc-100 hover:border-zinc-200 transition-all"
-          onClick={() => updateSettings({ language: lang.code })}
-        >
-          <span className="text-sm font-bold">{lang.label}</span>
-          {settings.language === lang.code && (
-            <Check size={14} className="text-black" />
-          )}
-        </button>
-      ))}
+    <div className="pt-4">
+      <RadioGroup
+        value={settings.language}
+        onValueChange={(value) => updateSettings({ language: value })}
+      >
+        {LANGUAGES.map((lang) => (
+          <FieldLabel
+            key={lang.code}
+            htmlFor={`lang-${lang.code}`}
+            className="cursor-pointer"
+          >
+            <Field orientation="horizontal">
+              <div className="flex items-center gap-4 flex-1">
+                <img
+                  src={lang.flag}
+                  alt={lang.label}
+                  className="w-7 h-7 rounded-full object-cover"
+                />
+                <FieldContent>
+                  <FieldTitle className="text-sm font-bold text-zinc-900">
+                    {lang.label}
+                  </FieldTitle>
+                  <FieldDescription className="text-xs text-zinc-500">
+                    {lang.description}
+                  </FieldDescription>
+                </FieldContent>
+              </div>
+              <RadioGroupItem value={lang.code} id={`lang-${lang.code}`} />
+            </Field>
+          </FieldLabel>
+        ))}
+      </RadioGroup>
     </div>
   );
 }

@@ -43,11 +43,11 @@ export const SETTINGS_SECTIONS: SettingSection[] = [
         label: "Security",
         sub: "Two-factor authentication and passwords",
       },
-      {
-        id: "billing",
-        label: "Billing",
-        sub: "Manage your Grow Premium subscription",
-      },
+      // {
+      //   id: "billing",
+      //   label: "Billing",
+      //   sub: "Manage your Grow Premium subscription",
+      // },
     ],
   },
 ];

@@ -124,7 +124,7 @@ export default function ReflectionPage() {
         )}
       </div>
 
-      <div className="mt-10 flex justify-end">
+      <div className="mt-8 flex justify-end">
         <Button className="py-6 rounded-lg font-bold text-xs uppercase tracking-widest">
           <Zap className="mr-2 h-4 w-4" />
           Sync to Archive

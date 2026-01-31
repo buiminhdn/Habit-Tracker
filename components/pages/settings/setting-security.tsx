@@ -3,6 +3,7 @@
 import React from "react";
 import { UserSettings } from "@/types/app.type";
 import { Lock } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
 
 interface SettingSecurityProps {
   settings: UserSettings;
@@ -15,28 +16,22 @@ export function SettingSecurity({
 }: SettingSecurityProps) {
   return (
     <div className="space-y-4 pt-4">
-      <div className="p-4 rounded-xl bg-zinc-50 border border-zinc-100 flex items-center justify-between">
+      <div className="p-4 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Lock size={18} className="text-zinc-400" />
-          <span className="text-sm font-bold">Two-Factor Auth</span>
+          <span className="text-sm font-semibold">Two-Factor Auth</span>
         </div>
-        <div
-          className={`w-10 h-6 rounded-full relative p-1 cursor-pointer transition-colors ${settings.twoFactorEnabled ? "bg-black" : "bg-zinc-200"}`}
-          onClick={() =>
-            updateSettings({
-              twoFactorEnabled: !settings.twoFactorEnabled,
-            })
+        <Switch
+          checked={settings.twoFactorEnabled}
+          onCheckedChange={(checked) =>
+            updateSettings({ twoFactorEnabled: checked })
           }
-        >
-          <div
-            className={`w-4 h-4 bg-white rounded-full shadow-sm transition-all ${settings.twoFactorEnabled ? "ml-auto" : "ml-0"}`}
-          />
-        </div>
+        />
       </div>
-      <button className="w-full text-left p-4 rounded-xl border border-zinc-100 hover:bg-zinc-50 transition-all text-sm font-bold">
+      <button className="w-full text-left p-4 rounded-lg border border-zinc-200 hover:bg-zinc-50 text-sm font-semibold">
         Change Password
       </button>
-      <button className="w-full text-left p-4 rounded-xl border border-zinc-100 hover:bg-zinc-50 transition-all text-sm font-bold">
+      <button className="w-full text-left p-4 rounded-lg border border-zinc-200 hover:bg-zinc-50 text-sm font-semibold">
         Active Sessions
       </button>
     </div>

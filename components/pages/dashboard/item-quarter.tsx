@@ -9,7 +9,7 @@ interface QuarterCardProps {
 
 export function QuarterCard({ quarter }: QuarterCardProps) {
   return (
-    <Card className="shadow-xs border-zinc-100 hover:bg-black hover:text-white hover:scale-105 transition-all duration-500 group">
+    <Card className="shadow-xs border-zinc-200 hover:bg-black hover:text-white hover:scale-105 transition-all duration-500 group">
       <CardContent>
         <div className="flex justify-between items-start mb-6">
           <p className="font-bold text-xs  tracking-widest uppercase">

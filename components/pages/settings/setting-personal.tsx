@@ -2,9 +2,9 @@
 
 import React from "react";
 import { UserSettings } from "@/types/app.type";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Field, FieldLabel, FieldContent } from "@/components/ui/field";
 
 interface SettingPersonalProps {
   settings: UserSettings;
@@ -20,7 +20,7 @@ export function SettingPersonal({
   return (
     <div className="space-y-6 pt-4">
       <div className="flex flex-col items-center gap-4 mb-6">
-        <div className="w-20 h-20 rounded-2xl bg-zinc-100 overflow-hidden border-2 border-zinc-50 grayscale shadow-sm">
+        <div className="w-20 h-20 rounded-2xl bg-zinc-100 overflow-hidden border-2 border-zinc-50 shadow-sm">
           <img
             src={settings.avatar}
             alt="Avatar"
@@ -32,29 +32,41 @@ export function SettingPersonal({
         </button>
       </div>
       <div className="space-y-4">
-        <div className="space-y-2">
-          <Label className="text-xs font-black uppercase tracking-widest text-zinc-400">
+        <Field>
+          <FieldLabel
+            htmlFor="name"
+            className="text-xs font-bold uppercase tracking-widest text-zinc-500"
+          >
             Display Name
-          </Label>
-          <Input
-            value={settings.name}
-            onChange={(e) => updateSettings({ name: e.target.value })}
-            className="bg-zinc-50 border-zinc-100"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label className="text-xs font-black uppercase tracking-widest text-zinc-400">
+          </FieldLabel>
+          <FieldContent>
+            <Input
+              id="name"
+              value={settings.name}
+              onChange={(e) => updateSettings({ name: e.target.value })}
+              className="py-5 rounded-lg"
+            />
+          </FieldContent>
+        </Field>
+        <Field>
+          <FieldLabel
+            htmlFor="email"
+            className="text-xs font-bold uppercase tracking-widest text-zinc-500"
+          >
             Email
-          </Label>
-          <Input
-            type="email"
-            value={settings.email}
-            onChange={(e) => updateSettings({ email: e.target.value })}
-            className="bg-zinc-50 border-zinc-100"
-          />
-        </div>
+          </FieldLabel>
+          <FieldContent>
+            <Input
+              id="email"
+              type="email"
+              value={settings.email}
+              onChange={(e) => updateSettings({ email: e.target.value })}
+              className="py-5 rounded-lg"
+            />
+          </FieldContent>
+        </Field>
       </div>
-      <Button className="w-full mt-4" onClick={onClose}>
+      <Button className="w-full py-5.5 rounded-lg" onClick={onClose}>
         Save Changes
       </Button>
     </div>
