@@ -12,7 +12,6 @@ import {
 } from "recharts";
 import { useYear } from "@/hooks/use-year";
 import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { StatCard } from "@/components/pages/dashboard/item-stat";
 import { QuarterCard } from "@/components/pages/dashboard/item-quarter";
 
@@ -39,7 +38,7 @@ export default function YearPage() {
         </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-10">
         <StatCard
           icon={<Rocket size={16} />}
           title="Strategic Targets"
@@ -63,7 +62,7 @@ export default function YearPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-8 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-8 mb-10">
         <Card className="lg:col-span-3 shadow-xs border-zinc-200">
           <CardContent>
             <div className="flex items-center gap-3 mb-8">
@@ -129,8 +128,8 @@ export default function YearPage() {
             <p className="font-bold text-base mb-6 text-zinc-900 uppercase">
               Status Distribution
             </p>
-            <div className="h-64 flex items-center justify-center">
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="flex items-center justify-center">
+              <ResponsiveContainer width={250} height={250}>
                 <PieChart>
                   <Pie
                     data={statusDistribution}

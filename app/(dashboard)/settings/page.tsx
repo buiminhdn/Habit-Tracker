@@ -135,7 +135,7 @@ export default function SettingsPage() {
               Danger Zone
             </p>
           </div>
-          <div className="p-6 bg-white flex gap-4 items-center justify-between">
+          <div className="p-6 bg-white flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
             <div>
               <p className="text-sm font-bold text-zinc-900">
                 Delete workspace

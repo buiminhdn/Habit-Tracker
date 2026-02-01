@@ -50,8 +50,8 @@ function DailyPage() {
           </div>
           <p className="text-3xl font-bold font-heading">Daily Execution</p>
         </div>
-        <div className="w-full sm:w-fit bg-white border border-zinc-200 shadow-xs p-4 rounded-lg flex items-center gap-5">
-          <div className="text-right">
+        <div className="w-full sm:w-fit bg-white border border-zinc-200 shadow-xs p-4 rounded-lg flex items-center gap-4 sm:gap-5">
+          <div className="shrink-0 text-right">
             <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
               Efficiency
             </p>
@@ -67,7 +67,7 @@ function DailyPage() {
               {progress}%
             </p>
           </div>
-          <div className="w-full sm:w-32">
+          <div className="flex-1 sm:w-32">
             <Progress
               value={progress}
               className="h-1.5 bg-zinc-200"
@@ -83,8 +83,8 @@ function DailyPage() {
         </div>
       </header>
 
-      <div className="grid grid-cols-12 gap-10">
-        <div className="col-span-12 sm:col-span-7 space-y-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
+        <div className="lg:col-span-7 space-y-10">
           <section>
             <div className="flex justify-between items-center mb-5">
               <div className="font-bold uppercase flex items-center gap-3">
@@ -135,7 +135,7 @@ function DailyPage() {
           </section>
         </div>
 
-        <div className="col-span-12 sm:col-span-5 space-y-4 md:space-y-8">
+        <div className="lg:col-span-5 space-y-4 md:space-y-8">
           <Card className="group border-zinc-200 shadow-xs bg-white">
             <CardContent>
               <div className="w-10 h-10 rounded-xl bg-zinc-900 flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-105 group-hover:rotate-6">

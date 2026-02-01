@@ -79,9 +79,9 @@ function WeekPage() {
         </div>
       </header>
 
-      <div className="grid grid-cols-12 gap-4 lg:gap-10">
+      <div className="grid col-span-1 md:grid-cols-12 gap-10">
         {/* Left: Interval & Metrics */}
-        <div className="col-span-12 md:col-span-3 space-y-4 md:space-y-6">
+        <div className="md:col-span-3 space-y-4 md:space-y-6">
           <Card className="border-zinc-200 shadow-xs">
             <CardContent>
               <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-4">
@@ -151,13 +151,13 @@ function WeekPage() {
           </Card>
         </div>
 
-        <div className="col-span-12 md:col-span-9 gap-4 lg:gap-10 grid grid-cols-9">
+        <div className="md:col-span-9 gap-4 lg:gap-10 grid grid-cols-9">
           {/* Middle: Weekly Goals */}
           <div className="col-span-9 lg:col-span-6 space-y-10">
             <section className="bg-white border border-zinc-200 rounded-xl p-8 shadow-xs h-fit">
-              <div className="flex justify-between mb-8">
+              <div className="flex justify-between mb-8 gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-900">
+                  <div className="shrink-0 w-10 h-10 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-900">
                     <LayoutGrid size={20} />
                   </div>
                   <div>

@@ -90,7 +90,7 @@ export default function ReflectionPage() {
       )}
 
       <div className="space-y-6">
-        <div className="flex justify-between items-center pl-2 mb-2">
+        <div className="flex flex-col sm:flex-row gap-4 justify-between items-center pl-2 mb-4">
           <div className="flex items-center gap-3">
             <Calendar size={16} className="text-zinc-400" />
             <p className="text-xs font-black uppercase tracking-widest text-zinc-400">

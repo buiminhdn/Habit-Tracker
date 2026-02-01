@@ -23,7 +23,7 @@ export function ItemReflection({
         <div className="flex gap-4 justify-between mb-6">
           <div className="flex items-center gap-4">
             <div
-              className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+              className={`shrink-0 w-10 h-10 rounded-lg flex items-center justify-center ${
                 answered
                   ? "bg-emerald-50 text-emerald-600"
                   : "bg-amber-50 text-amber-500"
@@ -31,7 +31,7 @@ export function ItemReflection({
             >
               {answered ? <CheckCircle2 size={18} /> : <Sparkles size={18} />}
             </div>
-            <p className="font-semibold text-lg text-zinc-800">{text}</p>
+            <p className="font-semibold sm:text-lg text-zinc-800">{text}</p>
           </div>
           <Button
             variant="ghost"

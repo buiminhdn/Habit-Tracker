@@ -57,7 +57,7 @@ function MonthPage() {
             Monthly behavioral consistency analysis.
           </p>
         </div>
-        <div className="flex gap-1 bg-zinc-100 p-1 rounded-xl border border-zinc-200">
+        <div className="flex flex-wrap gap-1 bg-zinc-100 p-1 rounded-xl border border-zinc-200">
           {MONTHS.map((month, i) => (
             <button
               key={month}
@@ -74,8 +74,8 @@ function MonthPage() {
         </div>
       </header>
 
-      <div className="grid grid-cols-12 gap-4 lg:gap-6 mb-10">
-        <Card className="col-span-12 md:col-span-8 border-zinc-200 shadow-xs">
+      <div className="grid grid-cols-6 gap-4 lg:gap-6 mb-10">
+        <Card className="col-span-6 md:col-span-4 border-zinc-200 shadow-xs">
           <CardContent className="flex flex-col justify-center h-full">
             <div className="flex justify-between mb-5">
               <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest">
@@ -97,7 +97,7 @@ function MonthPage() {
           </CardContent>
         </Card>
 
-        <Card className="col-span-6 md:col-span-2 border-zinc-200 shadow-xs">
+        <Card className="col-span-3 md:col-span-1 border-zinc-200 shadow-xs">
           <CardContent className="flex flex-col items-center justify-center h-full">
             <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-2">
               Metrics
@@ -106,7 +106,7 @@ function MonthPage() {
           </CardContent>
         </Card>
 
-        <div className="col-span-6 md:col-span-2">
+        <div className="col-span-3 md:col-span-1">
           <CreateObjectiveDialog
             triggerLabel="Add Metric"
             triggerVariant="default"
@@ -174,8 +174,8 @@ function MonthPage() {
         </Table>
       </div>
 
-      <div className="grid grid-cols-12 gap-4 lg:gap-10">
-        <Card className="col-span-12 lg:col-span-7 border-zinc-200 shadow-xs h-fit">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10">
+        <Card className="lg:col-span-7 border-zinc-200 shadow-xs h-fit">
           <CardContent>
             <div className="flex justify-between items-center mb-8">
               <div className="flex items-center gap-2">
@@ -238,7 +238,7 @@ function MonthPage() {
           </CardContent>
         </Card>
 
-        <Card className="col-span-12 lg:col-span-5 bg-zinc-900 text-white border-none">
+        <Card className="lg:col-span-5 bg-zinc-900 text-white border-none">
           <CardContent className="flex flex-col h-full">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400">
