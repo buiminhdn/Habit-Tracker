@@ -8,7 +8,7 @@ import { Menu, X } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import { APP_NAME } from "@/constants/app.constant";
 
-const NAV_ITEMS = ["Capabilities", "Framework", "Performance"];
+const NAV_ITEMS = ["Features", "Docs", "Community"];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -41,7 +41,7 @@ export default function Navbar() {
           {NAV_ITEMS.map((item) => (
             <a
               key={item}
-              href={`#${item.toLowerCase()}`}
+              href={item.toLowerCase()}
               className="group relative text-xs font-semibold uppercase tracking-widest text-zinc-500 transition-colors duration-300 hover:text-black"
             >
               {item}
@@ -82,7 +82,7 @@ export default function Navbar() {
           {NAV_ITEMS.map((item) => (
             <a
               key={item}
-              href={`#${item.toLowerCase()}`}
+              href={item.toLowerCase()}
               className="text-sm font-semibold uppercase tracking-widest text-zinc-500 transition-colors hover:text-black"
               onClick={() => setIsMenuOpen(false)}
             >
