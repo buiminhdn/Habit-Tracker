@@ -7,6 +7,8 @@ import {
   LayoutGrid,
   MessageSquare,
   ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useTasks } from "@/hooks/use-tasks";
 import { formatCycleDate } from "@/lib/utils";
@@ -16,6 +18,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CreateObjectiveDialog } from "@/components/pages/dashboard/dialog-objective";
 import { GoalItem } from "@/components/pages/dashboard/item-goal";
 import { TaskStatusSummary } from "@/components/pages/dashboard/status-summary";
+import { WeekSelectItem } from "@/components/pages/dashboard/item-week-select";
 import { Textarea } from "@/components/ui/textarea";
 
 const WEEKS = ["Week 01", "Week 02", "Week 03", "Week 04"];
@@ -31,6 +34,7 @@ function WeekPage() {
   } = useTasks();
 
   const [activeWeek, setActiveWeek] = useState("Week 04");
+  const [activeMonth, setActiveMonth] = useState("February 2026");
 
   const today = formatCycleDate(new Date());
 
@@ -82,6 +86,30 @@ function WeekPage() {
       <div className="grid col-span-1 md:grid-cols-12 gap-10">
         {/* Left: Interval & Metrics */}
         <div className="md:col-span-3 space-y-4 md:space-y-6">
+          <Card className="border-zinc-200 shadow-xs py-4">
+            <CardContent>
+              <div className="flex items-center justify-between">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-zinc-600 hover:text-zinc-900"
+                >
+                  <ChevronLeft />
+                </Button>
+                <span className="text-xs text-center font-bold text-zinc-900 uppercase tracking-widest">
+                  {activeMonth}
+                </span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-zinc-600 hover:text-zinc-900"
+                >
+                  <ChevronRight />
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
           <Card className="border-zinc-200 shadow-xs">
             <CardContent>
               <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-4">
@@ -89,18 +117,13 @@ function WeekPage() {
               </p>
               <div className="space-y-1">
                 {WEEKS.map((week) => (
-                  <button
+                  <WeekSelectItem
                     key={week}
-                    onClick={() => setActiveWeek(week)}
-                    className={`w-full text-left px-4 py-3 rounded-lg font-bold transition-colors flex justify-between items-center ${
-                      activeWeek === week
-                        ? "bg-black text-white"
-                        : "text-zinc-500 hover:bg-zinc-100 hover:text-black"
-                    }`}
-                  >
-                    <span className="text-xs">{week}</span>
-                    {activeWeek === week && <ArrowUpRight size={14} />}
-                  </button>
+                    week={week}
+                    isActive={activeWeek === week}
+                    isCurrent={week === "Week 04"}
+                    onClick={setActiveWeek}
+                  />
                 ))}
               </div>
             </CardContent>

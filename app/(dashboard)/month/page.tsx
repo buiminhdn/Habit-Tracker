@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, TrendingUp, AlertCircle } from "lucide-react";
+import { Check, TrendingUp } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -23,6 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { CreateObjectiveDialog } from "@/components/pages/dashboard/dialog-objective";
+import { MonthWeekItem } from "@/components/pages/dashboard/item-month-week";
 
 const MONTHS = [
   "Jan",
@@ -42,6 +43,13 @@ const MONTHS = [
 function MonthPage() {
   const [currentMonth, setCurrentMonth] = useState(1);
   const { habits, consistencyData, overallDiscipline } = useHabits();
+
+  const weeklyProgress = [
+    { id: 1, label: "Week 01", progress: 85, completed: 6, total: 7 },
+    { id: 2, label: "Week 02", progress: 70, completed: 5, total: 7 },
+    { id: 3, label: "Week 03", progress: 95, completed: 6, total: 6 },
+    { id: 4, label: "Week 04", progress: 40, completed: 3, total: 7 },
+  ];
 
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
@@ -238,55 +246,16 @@ function MonthPage() {
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-5 bg-zinc-900 text-white border-none">
-          <CardContent className="flex flex-col h-full">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center text-zinc-400">
-                <AlertCircle size={20} />
-              </div>
-              <p className="text-2xl font-semibold uppercase font-heading">
-                System Insights
-              </p>
-            </div>
-
-            <div className="space-y-6 flex-1">
-              <div className="bg-zinc-800/50 p-6 rounded-lg border border-zinc-700/30">
-                <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-2">
-                  Momentum
-                </p>
-                <div className="flex items-baseline gap-2">
-                  <p className="text-4xl font-black text-emerald-400">12</p>
-                  <p className="text-zinc-400 text-xs font-bold uppercase tracking-wide">
-                    Streak
-                  </p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-zinc-800/50 p-6 rounded-lg border border-zinc-700/30">
-                  <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-2">
-                    Stability
-                  </p>
-                  <p className="text-xl font-bold tracking-wide text-amber-500 uppercase">
-                    Optimal
-                  </p>
-                </div>
-                <div className="bg-zinc-800/50 p-6 rounded-lg border border-zinc-700/30">
-                  <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-2">
-                    Priority
-                  </p>
-                  <p className="text-xl font-bold tracking-wide text-rose-500 uppercase">
-                    High
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <Button className="mt-5 bg-white text-black py-7 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-zinc-100">
-              Download Full Report
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4 h-fit">
+          {weeklyProgress.map((week) => (
+            <MonthWeekItem
+              key={week.id}
+              label={week.label}
+              progress={week.progress}
+              isCurrent={week.label === "Week 04"}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

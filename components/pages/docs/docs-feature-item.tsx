@@ -23,7 +23,7 @@ export const DocsFeatureItem = ({
   }
 
   return (
-    <div className="space-y-6 rounded-2xl bg-zinc-100 p-10 text-zinc-900 border border-zinc-200 transition-all duration-300 hover:bg-white hover:border-black hover:scale-105">
+    <div className="space-y-6 rounded-2xl bg-zinc-100 p-10 text-zinc-900 border-2 border-zinc-200 transition-all duration-300 hover:bg-white hover:border-black hover:scale-105">
       <p className="font-heading text-xl font-bold uppercase tracking-widest border-b border-black/5 pb-4">
         {title}
       </p>

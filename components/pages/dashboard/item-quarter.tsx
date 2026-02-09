@@ -9,21 +9,21 @@ interface QuarterCardProps {
 
 export function QuarterCard({ quarter }: QuarterCardProps) {
   return (
-    <Card className="shadow-xs border-zinc-200 hover:bg-black hover:text-white hover:scale-105 transition-all duration-500 group">
+    <Card className="shadow-xs border-zinc-200">
       <CardContent>
         <div className="flex justify-between items-start mb-6">
-          <p className="font-bold text-xs  tracking-widest uppercase">
+          <p className="font-bold text-xs tracking-widest uppercase">
             {quarter.label}
           </p>
           <p className="text-xs font-bold">{quarter.progress}%</p>
         </div>
-        <p className="text-2xl font-bold mb-4 ">
+        <p className="text-2xl font-bold mb-4">
           {quarter.completed} / {quarter.total}
         </p>
         <Progress
           value={quarter.progress}
-          className="h-1 bg-zinc-100 group-hover:bg-white/20"
-          indicatorClassName="bg-zinc-900 group-hover:bg-white"
+          className="h-1 bg-zinc-100"
+          indicatorClassName="bg-zinc-900"
         />
       </CardContent>
     </Card>
