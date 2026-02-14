@@ -11,13 +11,16 @@ import {
   Pie,
 } from "recharts";
 import { useYear } from "@/hooks/use-year";
+import { useHabits } from "@/hooks/use-habits";
 import { Card, CardContent } from "@/components/ui/card";
 import { StatCard } from "@/components/pages/dashboard/item-stat";
 import { QuarterCard } from "@/components/pages/dashboard/item-quarter";
+import { HabitItem } from "@/components/pages/dashboard/item-habit";
 
 export default function YearPage() {
   const { monthlyData, statusDistribution, quarters, overallProgress } =
     useYear();
+  const { habits } = useHabits();
 
   return (
     <div className="pb-10">
@@ -170,6 +173,19 @@ export default function YearPage() {
           <QuarterCard key={q.id} quarter={q} />
         ))}
       </div>
+
+      <Card className="shadow-xs border-zinc-200 mt-10">
+        <CardContent>
+          <p className="font-bold mb-6 text-zinc-900 uppercase tracking-widest">
+            Habit Performance
+          </p>
+          <div className="flex flex-col gap-2">
+            {habits.map((habit) => (
+              <HabitItem key={habit.id} habit={habit} />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

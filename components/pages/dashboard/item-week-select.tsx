@@ -5,7 +5,7 @@ interface WeekSelectItemProps {
   week: string;
   isActive: boolean;
   isCurrent?: boolean;
-  onClick: (week: string) => void;
+  onClick: () => void;
 }
 
 export function WeekSelectItem({
@@ -16,7 +16,7 @@ export function WeekSelectItem({
 }: WeekSelectItemProps) {
   return (
     <button
-      onClick={() => onClick(week)}
+      onClick={onClick}
       className={`w-full text-left px-4 py-3 rounded-lg font-bold transition-colors flex justify-between items-center ${
         isActive
           ? "bg-black text-white"

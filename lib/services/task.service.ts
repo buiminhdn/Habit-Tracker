@@ -1,60 +1,57 @@
-import { Task, WeeklyGoal } from "@/types/app.type";
+import { Task } from "@/types/task.type";
 import {
-  INITIAL_DAILY_TASKS,
-  INITIAL_HABIT_TASKS,
-  INITIAL_WEEKLY_GOALS,
+  SAMPLE_TASKS,
+  SAMPLE_HABITS,
+  SAMPLE_HABIT_LOGS,
 } from "@/constants/fake-data";
 
 export const TaskService = {
   getDailyTasks: (): Task[] => {
     // Sau này có thể fetch từ API/Database
-    return INITIAL_DAILY_TASKS;
+    return SAMPLE_TASKS;
   },
 
   getHabitTasks: (): Task[] => {
-    // Sau này có thể fetch từ API/Database
-    return INITIAL_HABIT_TASKS;
+    // Giả lập việc chuyển đổi Habit + Log thành Task cho UI daily
+    return SAMPLE_HABITS.map((habit) => ({
+      id: habit.id,
+      user_id: habit.user_id,
+      title: habit.title,
+      task_date: "2026-02-14",
+      is_completed: SAMPLE_HABIT_LOGS.some((log) => log.habit_id === habit.id),
+      created_at: habit.created_at,
+    }));
   },
 
-  getWeeklyGoals: (): WeeklyGoal[] => {
-    return INITIAL_WEEKLY_GOALS;
+  toggleTaskStatus: (tasks: Task[], id: string): Task[] => {
+    return tasks.map((t) =>
+      t.id === id ? { ...t, is_completed: !t.is_completed } : t,
+    );
   },
 
-  toggleTaskStatus: (tasks: Task[], id: number): Task[] => {
-    return tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t));
-  },
-
-  toggleGoalStatus: (goals: WeeklyGoal[], id: number): WeeklyGoal[] => {
-    return goals.map((g) => (g.id === id ? { ...g, done: !g.done } : g));
-  },
-
-  addTask: (tasks: Task[], title: string, type: "daily" | "habit"): Task[] => {
+  addTask: (tasks: Task[], title: string): Task[] => {
     const newTask: Task = {
-      id: Date.now(),
+      id: Date.now().toString(),
+      user_id: "u1", // Default user for sample
       title,
-      done: false,
-      type,
-      progress: type === "habit" ? 0 : undefined,
+      task_date: new Date().toISOString().split("T")[0],
+      is_completed: false,
+      created_at: new Date().toISOString(),
     };
     return [...tasks, newTask];
   },
 
-  addWeeklyGoal: (goals: WeeklyGoal[], title: string): WeeklyGoal[] => {
-    const newGoal: WeeklyGoal = {
-      id: Date.now(),
-      title,
-      done: false,
-    };
-    return [...goals, newGoal];
+  deleteTask: (tasks: Task[], id: string): Task[] => {
+    return tasks.filter((t) => t.id !== id);
   },
 
   calculateProgress: (allTasks: Task[]): number => {
     if (allTasks.length === 0) return 0;
-    const doneCount = allTasks.filter((t) => t.done).length;
+    const doneCount = allTasks.filter((t) => t.is_completed).length;
     return Math.round((doneCount / allTasks.length) * 100);
   },
 
   getRemainingTasksCount: (allTasks: Task[]): number => {
-    return allTasks.filter((t) => !t.done).length;
+    return allTasks.filter((t) => !t.is_completed).length;
   },
 };

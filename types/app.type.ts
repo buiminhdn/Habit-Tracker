@@ -64,23 +64,9 @@ export interface StatusDistribution {
   fill: string;
 }
 
-export interface Task {
-  id: number;
-  title: string;
-  done: boolean;
-  type?: "daily" | "habit";
-  progress?: number; // 0-100 for habits
-}
-
 export interface Quote {
   text: string;
   author: string;
-}
-
-export interface WeeklyGoal {
-  id: number;
-  title: string;
-  done: boolean;
 }
 
 export interface UserSettings {

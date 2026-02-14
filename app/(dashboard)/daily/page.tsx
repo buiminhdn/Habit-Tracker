@@ -16,13 +16,14 @@ import { formatDate } from "@/lib/utils";
 
 function DailyPage() {
   const {
+    progress,
     dailyTasks,
     habitTasks,
-    progress,
     remainingCount,
     toggleDailyTask,
     toggleHabitTask,
     addDailyTask,
+    deleteDailyTask,
   } = useTasks();
 
   const [quote, setQuote] = useState<Quote>(QUOTES[0]);
@@ -105,7 +106,8 @@ function DailyPage() {
                 <TaskItem
                   key={task.id}
                   task={task}
-                  onToggle={toggleDailyTask}
+                  onToggle={(id: string) => toggleDailyTask(id)}
+                  onDelete={(id: string) => deleteDailyTask(id)}
                 />
               ))}
             </div>
@@ -125,7 +127,7 @@ function DailyPage() {
                 <TaskItem
                   key={habit.id}
                   task={habit}
-                  onToggle={toggleHabitTask}
+                  onToggle={(id: string) => toggleHabitTask(id)}
                   showStatus
                 />
               ))}

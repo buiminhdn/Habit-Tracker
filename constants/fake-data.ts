@@ -1,13 +1,139 @@
 import {
-  Task,
   Quote,
-  WeeklyGoal,
-  Habit,
+  Habit as AppHabit,
   MonthlyData,
   StatusDistribution,
   QuarterInfo,
   ReflectionPrompt,
 } from "@/types/app.type";
+import { WeeklyGoal } from "@/types/week-goal.type";
+import { Task } from "@/types/task.type";
+import { Habit, HabitLog } from "@/types/habit.type";
+
+const TODAY = "2026-02-14";
+
+export const SAMPLE_TASKS: Task[] = [
+  // Today's tasks (3)
+  {
+    id: "t1",
+    user_id: "u1",
+    title: "Complete Q1 strategy presentation",
+    task_date: TODAY,
+    is_completed: false,
+    created_at: `${TODAY}T09:00:00Z`,
+  },
+  {
+    id: "t2",
+    user_id: "u1",
+    title: "Weekly performance review with team",
+    task_date: TODAY,
+    is_completed: true,
+    created_at: `${TODAY}T10:30:00Z`,
+  },
+  {
+    id: "t3",
+    user_id: "u1",
+    title: "Gym: Upper body session",
+    task_date: TODAY,
+    is_completed: false,
+    created_at: `${TODAY}T17:00:00Z`,
+  },
+];
+
+export const SAMPLE_HABITS: Habit[] = [
+  {
+    id: "h1",
+    user_id: "u1",
+    title: "Wake up at 5:00 AM",
+    start_date: "2026-01-01",
+    end_date: null,
+    created_at: "2026-01-01T05:00:00Z",
+  },
+  {
+    id: "h2",
+    user_id: "u1",
+    title: "Meditate 15 mins",
+    start_date: "2026-01-01",
+    end_date: null,
+    created_at: "2026-01-01T05:30:00Z",
+  },
+  {
+    id: "h4",
+    user_id: "u1",
+    title: "Read for 30 mins",
+    start_date: "2026-01-01",
+    end_date: null,
+    created_at: "2026-01-01T06:00:00Z",
+  },
+];
+
+export const SAMPLE_HABIT_LOGS: HabitLog[] = [
+  {
+    id: "l1",
+    habit_id: "h1",
+    log_date: TODAY,
+    created_at: `${TODAY}T05:05:00Z`,
+  },
+  {
+    id: "l2",
+    habit_id: "h2",
+    log_date: TODAY,
+    created_at: `${TODAY}T05:45:00Z`,
+  },
+];
+
+export const SAMPLE_WEEKLY_GOALS: WeeklyGoal[] = [
+  {
+    id: "wg1",
+    user_id: "u1",
+    title: "Finish habits this week",
+    is_completed: true,
+    week_start_date: "2026-02-09",
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "wg2",
+    user_id: "u1",
+    title: "Review strategic project proposal",
+    is_completed: false,
+    week_start_date: "2026-02-09",
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "wg3",
+    user_id: "u1",
+    title: "Gym workout 3 times",
+    is_completed: false,
+    week_start_date: "2026-02-09",
+    created_at: new Date().toISOString(),
+  },
+  // Week 4
+  {
+    id: "wg4",
+    user_id: "u1",
+    title: "Prepare for monthly review",
+    is_completed: false,
+    week_start_date: "2026-02-23",
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: "wg5",
+    user_id: "u1",
+    title: "Organize Q1 roadmap",
+    is_completed: false,
+    week_start_date: "2026-02-23",
+    created_at: new Date().toISOString(),
+  },
+  // March Week 1
+  {
+    id: "wg6",
+    user_id: "u1",
+    title: "Kickoff new project architecture",
+    is_completed: false,
+    week_start_date: "2026-03-02",
+    created_at: new Date().toISOString(),
+  },
+];
 
 export const QUOTES: Quote[] = [
   {
@@ -96,42 +222,7 @@ export const YEARLY_QUARTERS: QuarterInfo[] = [
   { id: 4, label: "Q4 2026", progress: 0, completed: 0, total: 1 },
 ];
 
-export const INITIAL_DAILY_TASKS: Task[] = [
-  { id: 3, title: "Weekly report review", done: false, type: "daily" },
-  { id: 5, title: "Gym session (Leg day)", done: false, type: "daily" },
-];
-
-export const INITIAL_HABIT_TASKS: Task[] = [
-  {
-    id: 1,
-    title: "Wake up at 5:00 AM",
-    done: true,
-    type: "habit",
-    progress: 15,
-  },
-  {
-    id: 2,
-    title: "Meditate 15 mins",
-    done: true,
-    type: "habit",
-    progress: 100,
-  },
-  {
-    id: 4,
-    title: "Read for 30 mins",
-    done: false,
-    type: "habit",
-    progress: 60,
-  },
-];
-
-export const INITIAL_WEEKLY_GOALS: WeeklyGoal[] = [
-  { id: 1, title: "Finish habits this week", done: true },
-  { id: 2, title: "Review strategic project proposal", done: false },
-  { id: 3, title: "Gym workout 3 times", done: false },
-];
-
-export const INITIAL_MONTHLY_HABITS: Habit[] = [
+export const INITIAL_MONTHLY_HABITS: AppHabit[] = [
   {
     id: "1",
     title: "Cognitive Deep Work",

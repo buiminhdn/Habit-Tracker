@@ -1,17 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState, useMemo } from "react";
+import { Clock, LayoutGrid, MessageSquare } from "lucide-react";
+import { useWeeklyGoals } from "@/hooks/use-weekly-goals";
 import {
-  Clock,
-  Zap,
-  LayoutGrid,
-  MessageSquare,
-  ArrowUpRight,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
-import { useTasks } from "@/hooks/use-tasks";
-import { formatCycleDate } from "@/lib/utils";
+  formatCycleDate,
+  getWeekStartDate,
+  getCurrentWeekStartDate,
+  getInitialWeekData,
+} from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,22 +16,37 @@ import { CreateObjectiveDialog } from "@/components/pages/dashboard/dialog-objec
 import { GoalItem } from "@/components/pages/dashboard/item-goal";
 import { TaskStatusSummary } from "@/components/pages/dashboard/status-summary";
 import { WeekSelectItem } from "@/components/pages/dashboard/item-week-select";
+import { MonthSelectItem } from "@/components/pages/dashboard/item-month-select";
 import { Textarea } from "@/components/ui/textarea";
 
 const WEEKS = ["Week 01", "Week 02", "Week 03", "Week 04"];
 
 function WeekPage() {
+  const initialData = useMemo(() => getInitialWeekData(), []);
+  const [activeWeekIndex, setActiveWeekIndex] = useState(initialData.index);
+  const [activeMonth, setActiveMonth] = useState(initialData.month);
+
+  const handleMonthChange = (date: Date) => {
+    setActiveMonth(date);
+    setActiveWeekIndex(0);
+  };
+
+  const currentMondayStr = useMemo(() => getCurrentWeekStartDate(), []);
+
+  const weekStartDate = useMemo(
+    () => getWeekStartDate(activeMonth, activeWeekIndex + 1),
+    [activeMonth, activeWeekIndex],
+  );
+
+  const isPastWeek = weekStartDate < currentMondayStr;
+
   const {
-    habitTasks,
     weeklyGoals,
     weeklyGoalsProgress,
     remainingGoalsCount,
     toggleWeeklyGoal,
     addWeeklyGoal,
-  } = useTasks();
-
-  const [activeWeek, setActiveWeek] = useState("Week 04");
-  const [activeMonth, setActiveMonth] = useState("February 2026");
+  } = useWeeklyGoals(weekStartDate);
 
   const today = formatCycleDate(new Date());
 
@@ -86,88 +98,28 @@ function WeekPage() {
       <div className="grid col-span-1 md:grid-cols-12 gap-10">
         {/* Left: Interval & Metrics */}
         <div className="md:col-span-3 space-y-4 md:space-y-6">
-          <Card className="border-zinc-200 shadow-xs py-4">
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-zinc-600 hover:text-zinc-900"
-                >
-                  <ChevronLeft />
-                </Button>
-                <span className="text-xs text-center font-bold text-zinc-900 uppercase tracking-widest">
-                  {activeMonth}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-zinc-600 hover:text-zinc-900"
-                >
-                  <ChevronRight />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+          <MonthSelectItem
+            currentDate={activeMonth}
+            onChange={handleMonthChange}
+          />
 
           <Card className="border-zinc-200 shadow-xs">
             <CardContent>
-              <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-4">
+              <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-4">
                 Interval Select
               </p>
               <div className="space-y-1">
-                {WEEKS.map((week) => (
+                {WEEKS.map((week, index) => (
                   <WeekSelectItem
                     key={week}
                     week={week}
-                    isActive={activeWeek === week}
-                    isCurrent={week === "Week 04"}
-                    onClick={setActiveWeek}
+                    isActive={activeWeekIndex === index}
+                    isCurrent={
+                      getWeekStartDate(activeMonth, index + 1) ===
+                      currentMondayStr
+                    }
+                    onClick={() => setActiveWeekIndex(index)}
                   />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-zinc-200 shadow-xs">
-            <CardContent>
-              <div className="flex items-center gap-2 mb-6">
-                <Zap size={14} className="text-zinc-900" />
-                <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
-                  Behavioral Metrics
-                </p>
-              </div>
-              <div className="space-y-4">
-                {habitTasks.map((habit) => (
-                  <div key={habit.id}>
-                    <div className="flex justify-between text-xs font-bold mb-1.5">
-                      <span className="text-zinc-600 truncate mr-2">
-                        {habit.title}
-                      </span>
-                      <span
-                        className={`text-[10px] ${
-                          (habit.progress ?? 0) < 40
-                            ? "text-rose-600"
-                            : (habit.progress ?? 0) > 80
-                              ? "text-emerald-600"
-                              : "text-zinc-900"
-                        }`}
-                      >
-                        {habit.progress ?? 0}%
-                      </span>
-                    </div>
-                    <Progress
-                      value={habit.progress ?? 0}
-                      className="h-1 bg-zinc-200"
-                      indicatorClassName={
-                        (habit.progress ?? 0) < 40
-                          ? "bg-rose-500"
-                          : (habit.progress ?? 0) > 80
-                            ? "bg-emerald-500"
-                            : "bg-zinc-900"
-                      }
-                    />
-                  </div>
                 ))}
               </div>
             </CardContent>
@@ -188,31 +140,46 @@ function WeekPage() {
                       Weekly Goals
                     </p>
                     <p className="text-[10px] font-bold font-heading uppercase text-zinc-400 tracking-widest">
-                      {activeWeek} of Cycle
+                      {WEEKS[activeWeekIndex]} of Cycle
                     </p>
                   </div>
                 </div>
-                <CreateObjectiveDialog
-                  onAdd={addWeeklyGoal}
-                  triggerLabel="New Goal"
-                  submitLabel="Set Goal"
-                />
+                {!isPastWeek && (
+                  <CreateObjectiveDialog
+                    onAdd={addWeeklyGoal}
+                    triggerLabel="New Goal"
+                    submitLabel="Set Goal"
+                  />
+                )}
               </div>
 
               <div className="space-y-2">
-                {weeklyGoals.map((goal) => (
-                  <GoalItem
-                    key={goal.id}
-                    goal={goal}
-                    onToggle={toggleWeeklyGoal}
-                  />
-                ))}
+                {weeklyGoals.length > 0 ? (
+                  weeklyGoals.map((goal) => (
+                    <GoalItem
+                      key={goal.id}
+                      goal={goal}
+                      onToggle={toggleWeeklyGoal}
+                      disabled={isPastWeek}
+                    />
+                  ))
+                ) : (
+                  <div className="py-8 text-center border-2 border-dashed border-zinc-200 rounded-md bg-zinc-50/50">
+                    <p className="text-zinc-400 font-medium text-sm">
+                      {isPastWeek
+                        ? "No goals were set for this week"
+                        : "Add your first goal this week"}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              <TaskStatusSummary
-                remainingCount={remainingGoalsCount}
-                type="week"
-              />
+              {weeklyGoals.length > 0 && (
+                <TaskStatusSummary
+                  remainingCount={remainingGoalsCount}
+                  type="week"
+                />
+              )}
             </section>
           </div>
 
