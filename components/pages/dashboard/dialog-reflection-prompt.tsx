@@ -14,10 +14,11 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Field } from "@/components/ui/field";
+import { ReflectionType } from "@/types/reflection.type";
 
 interface DialogReflectionPromptProps {
-  reflectionType: "MONTH" | "YEAR";
-  onAdd: (type: "MONTH" | "YEAR", text: string) => void;
+  reflectionType: ReflectionType;
+  onAdd: (type: ReflectionType, text: string) => void;
 }
 
 export function DialogReflectionPrompt({
@@ -50,7 +51,7 @@ export function DialogReflectionPrompt({
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-xl uppercase font-bold">
-            New {reflectionType === "MONTH" ? "Monthly" : "Yearly"} Prompt
+            New {reflectionType === "monthly" ? "Monthly" : "Yearly"} Prompt
           </DialogTitle>
         </DialogHeader>
         <form className="space-y-4 pt-2" onSubmit={handleAddQuestion}>

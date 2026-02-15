@@ -1,18 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Sparkles, Clock, Quote as QuoteIcon, Zap, Target } from "lucide-react";
-import { Quote } from "@/types/app.type";
-import { QUOTES } from "@/constants/fake-data";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Card, CardContent } from "@/components/ui/card";
+import React, { useState } from "react";
+import { Clock, Zap, Target } from "lucide-react";
 import { CreateObjectiveDialog } from "@/components/pages/dashboard/dialog-objective";
 import { TaskItem } from "@/components/pages/dashboard/item-task";
 import { TaskStatusSummary } from "@/components/pages/dashboard/status-summary";
-import { Textarea } from "@/components/ui/textarea";
 import { useTasks } from "@/hooks/use-tasks";
+import { WeeklyGoalsCard } from "@/components/pages/dashboard/item-weekly-goals-card";
 import { formatDate } from "@/lib/utils";
+import { DayPicker } from "@/components/pages/dashboard/item-day-picker";
+import { EfficiencyCard } from "@/components/pages/dashboard/item-efficiency";
+import { QuoteCard } from "@/components/pages/dashboard/item-quote";
 
 function DailyPage() {
   const {
@@ -26,61 +24,27 @@ function DailyPage() {
     deleteDailyTask,
   } = useTasks();
 
-  const [quote, setQuote] = useState<Quote>(QUOTES[0]);
+  const [date, setDate] = useState(new Date());
 
-  useEffect(() => {
-    const pickRandom = () => {
-      setQuote(QUOTES[Math.floor(Math.random() * QUOTES.length)]);
-    };
-
-    const timer = setTimeout(pickRandom, 0);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const today = formatDate(new Date());
+  const today = formatDate(date);
 
   return (
     <div className="pb-10">
-      <header className="flex flex-col sm:flex-row justify-between items-center mb-10 gap-6">
+      <header className="flex flex-col lg:flex-row justify-between items-stretch mb-10 gap-6">
         <div>
-          <div className="flex items-center gap-2 text-zinc-500 mb-2">
+          <div className="flex items-center justify-center lg:justify-start gap-2 text-zinc-500 mb-2">
             <Clock size={12} />
             <p className="text-xs uppercase tracking-widest font-semibold">
               {today}
             </p>
           </div>
-          <p className="text-3xl font-bold font-heading">Daily Execution</p>
+          <p className="text-center lg:text-start text-3xl font-bold font-heading">
+            Daily Execution
+          </p>
         </div>
-        <div className="w-full sm:w-fit bg-white border border-zinc-200 shadow-xs p-4 rounded-lg flex items-center gap-4 sm:gap-5">
-          <div className="shrink-0 text-right">
-            <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
-              Efficiency
-            </p>
-            <p
-              className={`text-xl font-black ${
-                progress < 40
-                  ? "text-rose-600"
-                  : progress > 80
-                    ? "text-emerald-600"
-                    : "text-zinc-900"
-              }`}
-            >
-              {progress}%
-            </p>
-          </div>
-          <div className="flex-1 sm:w-32">
-            <Progress
-              value={progress}
-              className="h-1.5 bg-zinc-200"
-              indicatorClassName={
-                progress < 40
-                  ? "bg-rose-500"
-                  : progress > 80
-                    ? "bg-emerald-500"
-                    : "bg-zinc-900"
-              }
-            />
-          </div>
+        <div className="flex flex-col lg:flex-row gap-4">
+          <DayPicker currentDate={date} onChange={setDate} />
+          <EfficiencyCard progress={progress} />
         </div>
       </header>
 
@@ -133,42 +97,13 @@ function DailyPage() {
               ))}
             </div>
 
-            <TaskStatusSummary remainingCount={remainingCount} type="day" />
+            <TaskStatusSummary remainingCount={remainingCount} />
           </section>
         </div>
 
         <div className="lg:col-span-5 space-y-4 md:space-y-8">
-          <Card className="group border-zinc-200 shadow-xs bg-white">
-            <CardContent>
-              <div className="w-10 h-10 rounded-xl bg-zinc-900 flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-105 group-hover:rotate-6">
-                <QuoteIcon size={16} className="text-white" />
-              </div>
-              <p className="mt-6 text-xl font-medium leading-relaxed text-zinc-800 tracking-tight italic">
-                &quot;{quote.text}&quot;
-              </p>
-              <p className="mt-4 text-xs font-bold uppercase tracking-widest text-zinc-400">
-                — {quote.author}
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-zinc-900 text-white border-none shadow-xl">
-            <CardContent>
-              <div className="flex items-center gap-3 mb-6 relative">
-                <div className="w-9 h-9 rounded-lg bg-zinc-800 flex items-center justify-center text-white">
-                  <Sparkles size={16} />
-                </div>
-                <p className="font-bold text-lg uppercase">Daily Insight</p>
-              </div>
-              <Textarea
-                className="bg-zinc-800 border-zinc-700 rounded-lg p-4 text-xs text-zinc-200 resize-none h-40 relative placeholder:text-zinc-600 leading-relaxed"
-                placeholder="Record a strategic breakthrough from today..."
-              />
-              <Button className="w-full mt-4 bg-white text-black py-6 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-zinc-100 relative">
-                Save to Journal
-              </Button>
-            </CardContent>
-          </Card>
+          <WeeklyGoalsCard currentDate={date} />
+          <QuoteCard />
         </div>
       </div>
     </div>

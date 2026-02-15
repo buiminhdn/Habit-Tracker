@@ -17,3 +17,8 @@ export interface HabitLog {
   log_date: ISODateString;
   created_at: ISOTimestampString;
 }
+
+export interface HabitWithStats extends Habit {
+  history: boolean[];
+  progress: number;
+}

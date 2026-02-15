@@ -26,7 +26,6 @@ import {
 
 const navItems = [
   { href: ROUTES.DASHBOARD.DAILY, label: "Daily", icon: Sun },
-  { href: ROUTES.DASHBOARD.WEEK, label: "Weekly", icon: ListTodo },
   { href: ROUTES.DASHBOARD.MONTH, label: "Monthly", icon: Calendar },
   { href: ROUTES.DASHBOARD.YEAR, label: "Yearly", icon: Target },
   {

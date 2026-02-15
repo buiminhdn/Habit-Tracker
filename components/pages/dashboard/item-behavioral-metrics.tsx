@@ -4,10 +4,10 @@ import React from "react";
 import { Zap } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Habit } from "@/types/app.type";
+import { HabitWithStats } from "@/types/habit.type";
 
 interface BehavioralMetricsItemProps {
-  habits: Habit[];
+  habits: HabitWithStats[];
 }
 
 export function BehavioralMetricsItem({ habits }: BehavioralMetricsItemProps) {

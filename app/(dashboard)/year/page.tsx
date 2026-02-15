@@ -1,33 +1,25 @@
 "use client";
 
 import { Rocket, Award, Activity, Zap } from "lucide-react";
-import {
-  ResponsiveContainer,
-  BarChart,
-  XAxis,
-  Tooltip,
-  Bar,
-  PieChart,
-  Pie,
-} from "recharts";
+import { ResponsiveContainer, BarChart, XAxis, Tooltip, Bar } from "recharts";
 import { useYear } from "@/hooks/use-year";
 import { useHabits } from "@/hooks/use-habits";
+import { getCurrentYear } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { StatCard } from "@/components/pages/dashboard/item-stat";
 import { QuarterCard } from "@/components/pages/dashboard/item-quarter";
 import { HabitItem } from "@/components/pages/dashboard/item-habit";
 
 export default function YearPage() {
-  const { monthlyData, statusDistribution, quarters, overallProgress } =
-    useYear();
-  const { habits } = useHabits();
+  const { monthlyData, quarters, overallProgress } = useYear();
+  const { habitsOverall } = useHabits();
 
   return (
     <div className="pb-10">
       <header className="flex justify-between items-end mb-10">
         <div>
           <p className="text-3xl font-bold tracking-tight text-zinc-900">
-            2026 Roadmap
+            {getCurrentYear()} Roadmap
           </p>
           <p className="text-zinc-500 mt-2 font-bold uppercase tracking-widest text-[10px]">
             Long-term strategic growth trajectory.
@@ -65,6 +57,19 @@ export default function YearPage() {
         />
       </div>
 
+      <Card className="shadow-xs border-zinc-200 mb-10">
+        <CardContent>
+          <p className="font-bold mb-6 text-zinc-900 uppercase tracking-widest">
+            Habit Performance
+          </p>
+          <div className="flex flex-col gap-2">
+            {habitsOverall.map((habit) => (
+              <HabitItem key={habit.id} habit={habit} />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 lg:gap-8 mb-10">
         <Card className="lg:col-span-3 shadow-xs border-zinc-200">
           <CardContent>
@@ -90,7 +95,8 @@ export default function YearPage() {
                   />
 
                   <Tooltip
-                    cursor={{ fill: "#fcfcfd" }}
+                    cursor={{ fill: "#f4f4f5" }}
+                    formatter={(value) => [`${value ?? 0}%`, "Progress"]}
                     contentStyle={{
                       borderRadius: "8px",
                       border: "1px solid #f4f4f5",
@@ -125,67 +131,12 @@ export default function YearPage() {
             </div>
           </CardContent>
         </Card>
-
-        <Card className="lg:col-span-2 shadow-xs border-zinc-200">
-          <CardContent>
-            <p className="font-bold text-base mb-6 text-zinc-900 uppercase">
-              Status Distribution
-            </p>
-            <div className="flex items-center justify-center">
-              <ResponsiveContainer width={250} height={250}>
-                <PieChart>
-                  <Pie
-                    data={statusDistribution}
-                    dataKey="value"
-                    innerRadius={70}
-                    outerRadius={90}
-                    paddingAngle={4}
-                    stroke="none"
-                  />
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="space-y-3 ml-4">
-                {statusDistribution.map((item) => (
-                  <div key={item.name} className="flex items-center gap-3">
-                    <div
-                      className="w-2 h-2 rounded-full"
-                      style={{ backgroundColor: item.fill }}
-                    ></div>
-                    <div>
-                      <p className="font-bold text-zinc-900 leading-tight">
-                        {item.value}
-                      </p>
-                      <p className="text-xs text-zinc-400 font-bold uppercase tracking-wider leading-tight whitespace-nowrap">
-                        {item.name}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 h-fit">
+          {quarters.map((q) => (
+            <QuarterCard key={q.id} quarter={q} />
+          ))}
+        </div>
       </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        {quarters.map((q) => (
-          <QuarterCard key={q.id} quarter={q} />
-        ))}
-      </div>
-
-      <Card className="shadow-xs border-zinc-200 mt-10">
-        <CardContent>
-          <p className="font-bold mb-6 text-zinc-900 uppercase tracking-widest">
-            Habit Performance
-          </p>
-          <div className="flex flex-col gap-2">
-            {habits.map((habit) => (
-              <HabitItem key={habit.id} habit={habit} />
-            ))}
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }

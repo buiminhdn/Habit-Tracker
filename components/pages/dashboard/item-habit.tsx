@@ -1,15 +1,21 @@
 import React from "react";
 import { Progress } from "@/components/ui/progress";
-import { Habit } from "@/types/app.type";
+import { HabitWithStats } from "@/types/habit.type";
 
 interface HabitItemProps {
-  habit: Habit;
+  habit: HabitWithStats;
 }
 
 export function HabitItem({ habit }: HabitItemProps) {
   return (
     <div className="flex items-center justify-between bg-zinc-50 px-4 py-4 rounded-md">
-      <p className="text-xs font-semibold text-zinc-900">{habit.title}</p>
+      <div className="flex gap-3 items-center">
+        <span className="relative flex size-2">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-200 opacity-75"></span>
+          <span className="relative inline-flex size-2 rounded-full bg-emerald-200"></span>
+        </span>
+        <p className="text-xs font-semibold text-zinc-900">{habit.title}</p>
+      </div>
       <div className="flex items-center gap-3 w-28 sm:w-32">
         <Progress
           value={habit.progress}

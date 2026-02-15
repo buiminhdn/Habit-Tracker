@@ -23,28 +23,6 @@ export interface Goal {
   progress: number;
 }
 
-export interface Habit {
-  id: string;
-  title: string;
-  status: "OPTIMAL" | "STABLE" | "NEED_FOCUS";
-  history: boolean[]; // 31 days
-  progress: number;
-}
-
-export interface ReflectionEntry {
-  id: string;
-  question: string;
-  answer: string;
-  type: "YEAR" | "MONTH" | "DAY";
-  period: string;
-}
-
-export interface ReflectionPrompt {
-  id: string;
-  text: string;
-  answered: boolean;
-}
-
 export interface QuarterInfo {
   id: number;
   label: string;
@@ -56,12 +34,6 @@ export interface QuarterInfo {
 export interface MonthlyData {
   name: string;
   value: number;
-}
-
-export interface StatusDistribution {
-  name: string;
-  value: number;
-  fill: string;
 }
 
 export interface Quote {

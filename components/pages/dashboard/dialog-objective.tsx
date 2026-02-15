@@ -55,9 +55,12 @@ export function CreateObjectiveDialog({
         <Button
           variant={triggerVariant}
           size="sm"
-          className={cn("uppercase text-xs font-bold", triggerClassName)}
+          className={cn(
+            "flex flex-wrap uppercase text-xs font-bold",
+            triggerClassName,
+          )}
         >
-          <Plus size={12} /> {triggerLabel}
+          <Plus size={12} /> <p>{triggerLabel}</p>
         </Button>
       </DialogTrigger>
       <DialogContent>

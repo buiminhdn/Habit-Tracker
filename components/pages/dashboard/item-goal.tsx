@@ -17,8 +17,8 @@ export function GoalItem({ goal, onToggle, disabled }: GoalItemProps) {
         disabled ? "cursor-not-allowed" : "cursor-pointer group"
       } ${
         goal.is_completed
-          ? "bg-zinc-50 border-transparent opacity-80"
-          : "bg-white border-zinc-200 hover:border-zinc-300"
+          ? "bg-white/5 border-transparent opacity-60"
+          : "bg-zinc-900 border-zinc-800 hover:border-zinc-700"
       }`}
     >
       <div
@@ -26,8 +26,8 @@ export function GoalItem({ goal, onToggle, disabled }: GoalItemProps) {
           goal.is_completed
             ? "text-emerald-500"
             : disabled
-              ? "text-zinc-200"
-              : "text-zinc-200 group-hover:text-zinc-400"
+              ? "text-zinc-700"
+              : "text-zinc-600 group-hover:text-zinc-400"
         }`}
       >
         {goal.is_completed ? (
@@ -39,7 +39,7 @@ export function GoalItem({ goal, onToggle, disabled }: GoalItemProps) {
       <div>
         <p
           className={`font-semibold text-sm ${
-            goal.is_completed ? "line-through text-zinc-400" : "text-zinc-900"
+            goal.is_completed ? "line-through text-zinc-500" : "text-white"
           }`}
         >
           {goal.title}

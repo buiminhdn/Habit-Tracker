@@ -10,3 +10,9 @@ export interface Reflection {
   content: string;
   created_at: ISOTimestampString;
 }
+
+export interface ReflectionPrompt {
+  id: string;
+  text: string;
+  answered: boolean;
+}

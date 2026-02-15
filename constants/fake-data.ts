@@ -1,11 +1,5 @@
-import {
-  Quote,
-  Habit as AppHabit,
-  MonthlyData,
-  StatusDistribution,
-  QuarterInfo,
-  ReflectionPrompt,
-} from "@/types/app.type";
+import { Quote, MonthlyData, QuarterInfo } from "@/types/app.type";
+import { ReflectionPrompt } from "@/types/reflection.type";
 import { WeeklyGoal } from "@/types/week-goal.type";
 import { Task } from "@/types/task.type";
 import { Habit, HabitLog } from "@/types/habit.type";
@@ -209,12 +203,6 @@ export const YEARLY_MONTHLY_DATA: MonthlyData[] = [
   { name: "Dec", value: 0 },
 ];
 
-export const YEARLY_STATUS_DISTRIBUTION: StatusDistribution[] = [
-  { name: "Done", value: 2, fill: "#10b981" },
-  { name: "In Progress", value: 3, fill: "#000000" },
-  { name: "Waiting", value: 1, fill: "#a1a1aa" },
-];
-
 export const YEARLY_QUARTERS: QuarterInfo[] = [
   { id: 1, label: "Q1 2026", progress: 50, completed: 1, total: 2 },
   { id: 2, label: "Q2 2026", progress: 50, completed: 1, total: 2 },
@@ -222,29 +210,60 @@ export const YEARLY_QUARTERS: QuarterInfo[] = [
   { id: 4, label: "Q4 2026", progress: 0, completed: 0, total: 1 },
 ];
 
-export const INITIAL_MONTHLY_HABITS: AppHabit[] = [
+export const INITIAL_MONTHLY_HABITS: Habit[] = [
   {
     id: "1",
+    user_id: "user-1",
+    start_date: "2026-01-01",
+    end_date: null,
+    created_at: "2026-01-01T00:00:00Z",
     title: "Cognitive Deep Work",
-    status: "OPTIMAL",
-    progress: 82,
-    history: Array.from({ length: 31 }, () => Math.random() > 0.2),
   },
   {
     id: "2",
+    user_id: "user-1",
+    start_date: "2026-01-01",
+    end_date: null,
+    created_at: "2026-01-01T01:00:00Z",
     title: "Physical Optimization",
-    status: "STABLE",
-    progress: 65,
-    history: Array.from({ length: 31 }, () => Math.random() > 0.4),
   },
   {
     id: "3",
+    user_id: "user-1",
+    start_date: "2026-01-01",
+    end_date: null,
+    created_at: "2026-01-01T02:00:00Z",
     title: "Strategic Learning",
-    status: "NEED_FOCUS",
-    progress: 45,
-    history: Array.from({ length: 31 }, () => Math.random() > 0.6),
   },
 ];
+
+export const INITIAL_HABIT_LOGS: HabitLog[] = [];
+
+const generateLogs = () => {
+  const logs: HabitLog[] = [];
+  const habits = ["1", "2", "3"];
+  const startDate = new Date(2026, 0, 1); // Jan 1, 2026
+  const endDate = new Date(2026, 2, 15); // Mar 15, 2026
+
+  for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+    const logDate = d.toISOString().split("T")[0];
+    habits.forEach((habitId) => {
+      // Randomly complete habits
+      const threshold = habitId === "1" ? 0.8 : habitId === "2" ? 0.6 : 0.4;
+      if (Math.random() < threshold) {
+        logs.push({
+          id: `log-${habitId}-${logDate}`,
+          habit_id: habitId,
+          log_date: logDate,
+          created_at: `${logDate}T10:00:00Z`,
+        });
+      }
+    });
+  }
+  return logs;
+};
+
+INITIAL_HABIT_LOGS.push(...generateLogs());
 
 export const MONTHLY_CONSISTENCY_DATA = Array.from({ length: 31 }, (_, i) => ({
   day: i + 1,

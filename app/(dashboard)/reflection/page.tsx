@@ -6,6 +6,7 @@ import { useReflection } from "@/hooks/use-reflection";
 import { Button } from "@/components/ui/button";
 import { DialogReflectionPrompt } from "@/components/pages/dashboard/dialog-reflection-prompt";
 import { ItemReflection } from "@/components/pages/dashboard/item-reflection";
+import { ReflectionType } from "@/types/reflection.type";
 
 const MONTHS = [
   "JAN",
@@ -25,13 +26,12 @@ const MONTHS = [
 export default function ReflectionPage() {
   const { monthlyPrompts, yearlyPrompts, addPrompt, removePrompt } =
     useReflection();
-  const [reflectionType, setReflectionType] = useState<"MONTH" | "YEAR">(
-    "MONTH",
-  );
+  const [reflectionType, setReflectionType] =
+    useState<ReflectionType>("monthly");
   const [selectedPeriod, setSelectedPeriod] = useState("JAN");
 
   const currentQuestions =
-    reflectionType === "MONTH" ? monthlyPrompts : yearlyPrompts;
+    reflectionType === "monthly" ? monthlyPrompts : yearlyPrompts;
 
   return (
     <div className="pb-10">
@@ -46,9 +46,9 @@ export default function ReflectionPage() {
         </div>
         <div className="mx-auto sm:mx-0 flex bg-zinc-100 p-1 h-fit w-fit rounded-xl border border-zinc-200">
           <button
-            onClick={() => setReflectionType("MONTH")}
+            onClick={() => setReflectionType("monthly")}
             className={`px-6 py-2 rounded-lg border text-xs font-bold uppercase tracking-widest ${
-              reflectionType === "MONTH"
+              reflectionType === "monthly"
                 ? "bg-white text-black border-zinc-200"
                 : "text-zinc-400 hover:text-black border-transparent"
             }`}
@@ -56,9 +56,9 @@ export default function ReflectionPage() {
             Monthly
           </button>
           <button
-            onClick={() => setReflectionType("YEAR")}
+            onClick={() => setReflectionType("yearly")}
             className={`px-6 py-2 rounded-lg border text-xs font-bold uppercase tracking-widest ${
-              reflectionType === "YEAR"
+              reflectionType === "yearly"
                 ? "bg-white text-black border-zinc-200"
                 : "text-zinc-400 hover:text-black border-transparent"
             }`}
@@ -68,7 +68,7 @@ export default function ReflectionPage() {
         </div>
       </header>
 
-      {reflectionType === "MONTH" && (
+      {reflectionType === "monthly" && (
         <div className="flex flex-wrap gap-2 mb-10 pb-3 no-scrollbar">
           <div className="flex items-center pr-4 border-r-2 mr-2 border-zinc-200 text-zinc-400">
             <History size={24} />

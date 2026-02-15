@@ -1,4 +1,4 @@
-import { ReflectionPrompt } from "@/types/app.type";
+import { ReflectionPrompt } from "@/types/reflection.type";
 import {
   MONTHLY_REFLECTION_PROMPTS,
   YEARLY_REFLECTION_PROMPTS,

@@ -40,12 +40,9 @@ export function useWeeklyGoals(weekStartDate?: string) {
         )
       : 0;
 
-  const remainingGoalsCount = weeklyGoals.filter((g) => !g.is_completed).length;
-
   return {
     weeklyGoals,
     weeklyGoalsProgress,
-    remainingGoalsCount,
     toggleWeeklyGoal,
     addWeeklyGoal,
   };

@@ -1,4 +1,5 @@
 import { Github, Linkedin, Twitter } from "lucide-react";
+import { getCurrentYear } from "@/lib/utils";
 
 const FOOTER_LINKS = [
   {
@@ -63,7 +64,7 @@ function Footer() {
         <div className="flex flex-col items-center justify-between gap-8 border-t border-zinc-50 pt-12 lg:flex-row lg:gap-0">
           <div className="flex flex-col items-center gap-6 lg:flex-row">
             <p className="text-xs font-bold uppercase tracking-widest text-zinc-400 font-sans text-center lg:text-xs">
-              © 2026 Shape Your Days. All rights reserved.
+              © {getCurrentYear()} Shape Your Days. All rights reserved.
             </p>
             <div className="flex items-center gap-4">
               {[Twitter, Github, Linkedin].map((Icon, i) => (

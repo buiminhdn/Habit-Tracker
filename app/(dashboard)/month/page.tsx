@@ -11,9 +11,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useHabits } from "@/hooks/use-habits";
+import { getCurrentYear, getDaysInMonth } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -24,34 +24,19 @@ import {
 } from "@/components/ui/table";
 import { CreateObjectiveDialog } from "@/components/pages/dashboard/dialog-objective";
 import { MonthWeekItem } from "@/components/pages/dashboard/item-month-week";
-
-const MONTHS = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+import { MonthGrid } from "@/components/pages/dashboard/item-month-grid";
+import { MONTHS } from "@/constants/app.constant";
 
 function MonthPage() {
-  const [currentMonth, setCurrentMonth] = useState(1);
-  const { habits, consistencyData, overallDiscipline } = useHabits();
+  const currentActualMonth = new Date().getMonth() + 1;
+  const [currentMonth, setCurrentMonth] = useState(currentActualMonth);
+  const { habits, consistencyData, weeklyProgress, overallDiscipline } =
+    useHabits(currentMonth);
 
-  const weeklyProgress = [
-    { id: 1, label: "Week 01", progress: 85, completed: 6, total: 7 },
-    { id: 2, label: "Week 02", progress: 70, completed: 5, total: 7 },
-    { id: 3, label: "Week 03", progress: 95, completed: 6, total: 6 },
-    { id: 4, label: "Week 04", progress: 40, completed: 3, total: 7 },
-  ];
+  const daysCount = getDaysInMonth(currentMonth, getCurrentYear());
+  const days = Array.from({ length: daysCount }, (_, i) => i + 1);
 
-  const days = Array.from({ length: 31 }, (_, i) => i + 1);
+  const isPastMonth = currentMonth < new Date().getMonth() + 1;
 
   return (
     <div className="pb-10">
@@ -59,27 +44,17 @@ function MonthPage() {
         <div>
           <p className="text-center md:text-left text-3xl font-bold tracking-tight text-zinc-900 mb-1">
             {MONTHS[currentMonth - 1]}{" "}
-            <span className="text-zinc-300">/ 2026</span>
+            <span className="text-zinc-300">/ {getCurrentYear()}</span>
           </p>
           <p className="text-zinc-500 mt-2 font-bold uppercase tracking-widest text-[10px]">
             Monthly behavioral consistency analysis.
           </p>
         </div>
-        <div className="flex flex-wrap gap-1 bg-zinc-100 p-1 rounded-xl border border-zinc-200">
-          {MONTHS.map((month, i) => (
-            <button
-              key={month}
-              onClick={() => setCurrentMonth(i + 1)}
-              className={`w-8 h-8 rounded-lg text-xs font-bold transition-colors ${
-                currentMonth === i + 1
-                  ? "bg-black text-white"
-                  : "text-zinc-400 hover:text-black hover:bg-white"
-              }`}
-            >
-              {i + 1}
-            </button>
-          ))}
-        </div>
+        <MonthGrid
+          currentMonth={currentMonth}
+          onMonthChange={setCurrentMonth}
+          maxMonth={currentActualMonth}
+        />
       </header>
 
       <div className="grid grid-cols-6 gap-4 lg:gap-6 mb-10">
@@ -105,22 +80,26 @@ function MonthPage() {
           </CardContent>
         </Card>
 
-        <Card className="col-span-3 md:col-span-1 border-zinc-200 shadow-xs">
-          <CardContent className="flex flex-col items-center justify-center h-full">
-            <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-2">
-              Metrics
-            </p>
-            <p className="text-3xl font-bold">{habits.length}</p>
-          </CardContent>
-        </Card>
+        <div className="col-span-6 md:col-span-2 flex items-stretch gap-4 lg:gap-6">
+          <Card className="border-zinc-200 shadow-xs flex-1">
+            <CardContent className="flex flex-col items-center justify-center h-full">
+              <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-2">
+                Metrics
+              </p>
+              <p className="text-3xl font-bold">{habits.length}</p>
+            </CardContent>
+          </Card>
 
-        <div className="col-span-3 md:col-span-1">
-          <CreateObjectiveDialog
-            triggerLabel="Add Metric"
-            triggerVariant="default"
-            triggerClassName="w-full h-full rounded-xl"
-            submitLabel="Initialize"
-          />
+          {!isPastMonth && (
+            <div className="flex-1">
+              <CreateObjectiveDialog
+                triggerLabel="Add Metric"
+                triggerVariant="default"
+                triggerClassName="w-full h-full rounded-xl"
+                submitLabel="Initialize"
+              />
+            </div>
+          )}
         </div>
       </div>
 
@@ -163,19 +142,22 @@ function MonthPage() {
                     {habit.progress}%
                   </p>
                 </TableCell>
-                {habit.history.map((done, idx) => (
-                  <TableCell key={idx}>
-                    <div
-                      className={`w-4 h-4 mx-auto rounded flex items-center justify-center ${
-                        done
-                          ? "bg-black text-white"
-                          : "bg-zinc-50 border border-zinc-200"
-                      }`}
-                    >
-                      {done && <Check size={10} strokeWidth={4} />}
-                    </div>
-                  </TableCell>
-                ))}
+                {days.map((day) => {
+                  const done = habit.history[day - 1];
+                  return (
+                    <TableCell key={day}>
+                      <div
+                        className={`w-4 h-4 mx-auto rounded flex items-center justify-center ${
+                          done
+                            ? "bg-black text-white"
+                            : "bg-zinc-50 border border-zinc-200"
+                        }`}
+                      >
+                        {done && <Check size={10} strokeWidth={4} />}
+                      </div>
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             ))}
           </TableBody>
@@ -193,13 +175,13 @@ function MonthPage() {
                 </p>
               </div>
               <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest">
-                31-day cycle
+                {daysCount}-day cycle
               </p>
             </div>
             <div className="h-60 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                  data={consistencyData}
+                  data={consistencyData.slice(0, daysCount)}
                   margin={{ top: 0, right: 0, left: -20, bottom: 0 }}
                 >
                   <XAxis dataKey="day" hide />
@@ -252,7 +234,6 @@ function MonthPage() {
               key={week.id}
               label={week.label}
               progress={week.progress}
-              isCurrent={week.label === "Week 04"}
             />
           ))}
         </div>

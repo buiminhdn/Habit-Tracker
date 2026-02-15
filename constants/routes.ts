@@ -8,7 +8,6 @@ export const ROUTES = {
 
   DASHBOARD: {
     DAILY: "/daily",
-    WEEK: "/week",
     MONTH: "/month",
     YEAR: "/year",
     REFLECTION: "/reflection",
